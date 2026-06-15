@@ -13,8 +13,6 @@ import { useRouter } from 'next/navigation';
 import { dashboardService, DashboardStats, RevenueData, RecentActivity } from '@/lib/services/dashboardService';
 import { formatCurrency } from '@/lib/utils';
 
-const adminEmails = ["dartonstaker@gmail.com"];
-
 export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
@@ -27,30 +25,13 @@ export default function AdminDashboard() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        console.log('Checking user session...');
         const { data: { user }, error } = await supabase.auth.getUser();
-        
-        if (error) {
-          console.error('Error checking user session:', error.message);
+
+        if (error || !user) {
           router.replace('/admin/login');
           return;
         }
 
-        console.log('Session check result:', user ? 'User found' : 'No user found');
-        
-        if (!user) {
-          console.log('No authenticated user, redirecting to login...');
-          router.replace('/admin/login');
-          return;
-        }
-
-        // Only allow admin emails
-        if (!user.email || !adminEmails.includes(user.email)) {
-          router.replace('/customer');
-          return;
-        }
-
-        console.log('User authenticated:', user.email);
         setUser(user);
       } catch (err) {
         console.error('Unexpected error checking session:', err);
@@ -60,25 +41,17 @@ export default function AdminDashboard() {
       }
     };
 
-    // Initial session check
-    getUser();
+    void getUser();
 
-    // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event, session?.user?.email);
-      
       if (event === 'SIGNED_OUT' || !session) {
-        console.log('User signed out or session expired');
         router.replace('/admin/login');
       } else if (session?.user) {
-        console.log('Session updated:', session.user.email);
         setUser(session.user);
       }
     });
 
-    // Cleanup subscription
     return () => {
-      console.log('Cleaning up auth subscription');
       subscription.unsubscribe();
     };
   }, [router]);

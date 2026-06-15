@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { supabase } from "@/lib/supabaseClient"
+import { isAdminEmail } from "@/lib/brand"
 
 export function AccountPopover() {
   const [isOpen, setIsOpen] = useState(false)
@@ -44,8 +45,10 @@ export function AccountPopover() {
               <p className="text-sm text-muted-foreground">{user.email}</p>
             </div>
             <div className="flex flex-col gap-2">
-              <Link href="/customer" onClick={() => setIsOpen(false)}>
-                <Button className="w-full" variant="outline">Profile</Button>
+              <Link href={isAdminEmail(user.email) ? "/admin" : "/customer"} onClick={() => setIsOpen(false)}>
+                <Button className="w-full" variant="outline">
+                  {isAdminEmail(user.email) ? "Admin Dashboard" : "Profile"}
+                </Button>
               </Link>
               <Button className="w-full" variant="destructive" onClick={handleLogout}>Log out</Button>
             </div>
