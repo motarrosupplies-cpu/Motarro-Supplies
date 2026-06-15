@@ -1,6 +1,6 @@
 'use client'
 
-import { Star, Truck, ShieldCheck, CreditCard } from 'lucide-react'
+import { Star, Truck, ShieldCheck } from 'lucide-react'
 import { PaymentMethodBadges } from '@/components/payment-method-badges'
 
 export function TrustSection() {
@@ -17,17 +17,12 @@ export function TrustSection() {
       icon: <ShieldCheck className="w-6 h-6 text-green-600" />,
       text: '1,000+ Products in Catalogue',
     },
-    {
-      icon: <CreditCard className="w-6 h-6 text-blue-600" />,
-      text: 'Secure Payments in Rands (ZAR)',
-    },
   ]
 
   return (
     <section className="py-8 bg-white border-y border-slate-200">
       <div className="container mx-auto px-4">
-        {/* Trust Items Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 mb-6">
           {trustItems.map((item, index) => (
             <div
               key={index}
@@ -39,11 +34,7 @@ export function TrustSection() {
           ))}
         </div>
 
-        <PaymentMethodBadges
-          className="pt-4 border-t border-slate-200"
-          label="Secure Payments:"
-          highlightGooglePay
-        />
+        <PaymentMethodBadges className="pt-4 border-t border-slate-200" />
       </div>
     </section>
   )

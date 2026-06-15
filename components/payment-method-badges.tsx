@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-const DEFAULT_METHODS = ['Google Pay', 'PayFast', 'Ozow', 'Visa', 'Mastercard'] as const
+const DEFAULT_METHODS = ['PayFast', 'Visa', 'Mastercard'] as const
 
 type PaymentMethod = (typeof DEFAULT_METHODS)[number]
 
