@@ -14,7 +14,7 @@ export function ImportMotarroCatalogCard() {
 
   const runImport = async () => {
     setRunning(true)
-    setProgress('Starting import from motarro.com.au catalogue…')
+    setProgress('Fetching catalogue from motarro.com.au…')
 
     try {
       const {
@@ -40,7 +40,7 @@ export function ImportMotarroCatalogCard() {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${session.access_token}`,
           },
-          body: JSON.stringify({ offset, batchSize: 75, source: 'seed' }),
+          body: JSON.stringify({ offset, batchSize: 75, source: 'live' }),
         })
 
         const data = await res.json()

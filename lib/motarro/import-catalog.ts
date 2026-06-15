@@ -132,9 +132,15 @@ export async function fetchMotarroAuCatalog(limit?: number): Promise<MotarroShop
 }
 
 export function loadMotarroSeedCatalog(rootDir: string): MotarroShopifyProduct[] {
-  const seedPath = resolve(rootDir, 'data/motarro-catalog-seed.json')
-  if (!existsSync(seedPath)) {
-    throw new Error(`Seed file not found: ${seedPath}`)
+  const candidates = [
+    resolve(rootDir, 'data/motarro-catalog-seed.json'),
+    resolve(process.cwd(), 'data/motarro-catalog-seed.json'),
+  ]
+  const seedPath = candidates.find((path) => existsSync(path))
+  if (!seedPath) {
+    throw new Error(
+      'Seed file not found on server. Use source "live" to fetch from motarro.com.au instead.'
+    )
   }
   const raw = JSON.parse(readFileSync(seedPath, 'utf8')) as {
     products?: MotarroShopifyProduct[]
@@ -143,6 +149,22 @@ export function loadMotarroSeedCatalog(rootDir: string): MotarroShopifyProduct[]
     throw new Error('Seed file has no products')
   }
   return raw.products
+}
+
+export async function resolveMotarroCatalogProducts(
+  source: 'live' | 'seed',
+  rootDir = process.cwd()
+): Promise<{ products: MotarroShopifyProduct[]; source: 'live' | 'seed' }> {
+  if (source === 'live') {
+    return { products: await fetchMotarroAuCatalog(), source: 'live' }
+  }
+
+  try {
+    return { products: loadMotarroSeedCatalog(rootDir), source: 'seed' }
+  } catch (seedError) {
+    console.warn('[motarro-import] Seed unavailable, falling back to live AU catalog:', seedError)
+    return { products: await fetchMotarroAuCatalog(), source: 'live' }
+  }
 }
 
 export type ImportBatchResult = {

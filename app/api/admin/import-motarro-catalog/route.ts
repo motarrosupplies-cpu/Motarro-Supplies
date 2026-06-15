@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import { verifyAdminRequest } from '@/lib/auth/verifyAdminApi'
 import { supabaseAdmin } from '@/lib/supabaseClient'
 import {
-  fetchMotarroAuCatalog,
   loadMotarroSeedCatalog,
+  resolveMotarroCatalogProducts,
   syncMotarroCatalogBatch,
 } from '@/lib/motarro/import-catalog'
 
@@ -39,13 +39,13 @@ export async function POST(request: Request) {
     const body = await request.json().catch(() => ({}))
     const offset = Number(body.offset ?? 0)
     const batchSize = Math.min(Number(body.batchSize ?? 75), 100)
-    const source = body.source === 'live' ? 'live' : 'seed'
+    const requestedSource = body.source === 'seed' ? 'seed' : 'live'
     const audToZarRate = Number(process.env.MOTARRO_AUD_TO_ZAR || 11.5)
 
-    const products =
-      source === 'live'
-        ? await fetchMotarroAuCatalog()
-        : loadMotarroSeedCatalog(process.cwd())
+    const { products, source } = await resolveMotarroCatalogProducts(
+      requestedSource,
+      process.cwd()
+    )
 
     const result = await syncMotarroCatalogBatch(supabaseAdmin, products, {
       offset,

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { supabaseAdmin } from "@/lib/supabaseClient"
+import { describeSupabaseAdminKeyError } from "@/lib/supabase-env"
 
 export async function GET() {
   try {
@@ -32,6 +33,16 @@ export async function GET() {
         }, { status: 403 })
       }
       
+      if (
+        error.message.toLowerCase().includes('invalid api key') ||
+        error.message.toLowerCase().includes('invalid jwt')
+      ) {
+        return NextResponse.json(
+          { error: describeSupabaseAdminKeyError(error.message) },
+          { status: 500 }
+        )
+      }
+
       throw error
     }
     
@@ -42,7 +53,12 @@ export async function GET() {
     console.error("Error fetching menu items:", error)
     
     // Return a more specific error message
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const rawMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage =
+      rawMessage.toLowerCase().includes('invalid api key') ||
+      rawMessage.toLowerCase().includes('invalid jwt')
+        ? describeSupabaseAdminKeyError(rawMessage)
+        : rawMessage
     return NextResponse.json(
       { error: errorMessage },
       { status: 500 }

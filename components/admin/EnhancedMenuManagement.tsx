@@ -47,6 +47,7 @@ interface ProductCategory {
 export function EnhancedMenuManagement() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([])
   const [categories, setCategories] = useState<ProductCategory[]>([])
+  const [menuLoadError, setMenuLoadError] = useState<string | null>(null)
   const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set())
   
   // Add item state
@@ -86,6 +87,7 @@ export function EnhancedMenuManagement() {
 
   const fetchMenuItems = async () => {
     try {
+      setMenuLoadError(null)
       console.log("Fetching menu items...")
       const response = await fetch("/api/admin/menu-items?t=" + Date.now(), {
         cache: 'no-store',
@@ -104,7 +106,8 @@ export function EnhancedMenuManagement() {
       setMenuItems(data)
     } catch (error) {
       console.error("Error fetching menu items:", error)
-      // Set empty array to prevent further errors
+      const message = error instanceof Error ? error.message : 'Failed to fetch menu items'
+      setMenuLoadError(message)
       setMenuItems([])
     }
   }
@@ -653,6 +656,11 @@ export function EnhancedMenuManagement() {
 
   return (
     <div className="space-y-6">
+      {menuLoadError ? (
+        <div className="rounded-md border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+          {menuLoadError}
+        </div>
+      ) : null}
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex-1 min-w-0">

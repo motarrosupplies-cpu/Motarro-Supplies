@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
 import { supabaseAdmin } from "@/lib/supabaseClient"
+import { describeSupabaseAdminKeyError } from "@/lib/supabase-env"
 
 export async function GET() {
   try {
@@ -23,11 +24,16 @@ export async function GET() {
 
     if (menuError) {
       console.error("Error accessing menu_items table:", menuError)
+      const friendlyError =
+        menuError.message.toLowerCase().includes('invalid api key') ||
+        menuError.message.toLowerCase().includes('invalid jwt')
+          ? describeSupabaseAdminKeyError(menuError.message)
+          : menuError.message
       return NextResponse.json(
         {
           status: "error",
           message: "menu_items table error",
-          error: menuError.message,
+          error: friendlyError,
           details: {
             table: "menu_items",
             error_type: "access_error",
