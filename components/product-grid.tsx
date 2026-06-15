@@ -21,6 +21,14 @@ export function ProductGrid({ products, isCustomPrinting = false, linkPrefix = "
   const safeProducts = Array.isArray(products) ? products : [];
   const activeProducts = safeProducts.filter(product => product.status === 'active');
 
+  if (activeProducts.length === 0) {
+    return (
+      <div className="rounded-2xl border bg-white px-6 py-12 text-center text-muted-foreground">
+        No products match your filters. Try clearing filters or turning off &quot;In stock only&quot;.
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
       {activeProducts.map((product, index) => (

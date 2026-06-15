@@ -55,7 +55,19 @@ export function SectionCatalogFilters({
     });
   }
 
-  if (categories.length === 0 && types.length === 0 && brands.length === 0) {
+  const hasActiveFilters = Boolean(
+    searchParams.get("category") ||
+      searchParams.get("brand") ||
+      searchParams.get("type") ||
+      inStockOnly
+  );
+
+  if (
+    categories.length === 0 &&
+    types.length === 0 &&
+    brands.length === 0 &&
+    !hasActiveFilters
+  ) {
     return null;
   }
 

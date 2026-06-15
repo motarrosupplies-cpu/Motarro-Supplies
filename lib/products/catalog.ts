@@ -113,12 +113,6 @@ export async function fetchPageCatalog(filters: PageCatalogFilters) {
     );
   }
 
-  if (filters.inStock) {
-    products = products.filter((product) => (product.stock ?? 0) > 0);
-  }
-
-  products.sort((left, right) => left.name.localeCompare(right.name));
-
   const subcategories = [
     ...new Set(
       products
@@ -126,6 +120,12 @@ export async function fetchPageCatalog(filters: PageCatalogFilters) {
         .filter((s): s is string => Boolean(s))
     ),
   ].sort();
+
+  if (filters.inStock) {
+    products = products.filter((product) => (product.stock ?? 0) > 0);
+  }
+
+  products.sort((left, right) => left.name.localeCompare(right.name));
 
   return {
     products,
