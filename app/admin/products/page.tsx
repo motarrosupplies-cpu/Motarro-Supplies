@@ -185,6 +185,8 @@ export default function ProductsPage() {
       </div>
 
       <ImportMotarroCatalogCard />
+
+      <Card>
         <CardHeader>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <CardTitle>All Products</CardTitle>
