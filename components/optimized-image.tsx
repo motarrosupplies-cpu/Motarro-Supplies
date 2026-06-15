@@ -17,6 +17,14 @@ interface OptimizedImageProps extends Omit<ImageProps, "src" | "alt"> {
 const SUPABASE_URL_IDENTIFIER = "supabase.co/storage/v1/object/public/"
 const PLACEHOLDER_BASE_URL = "https://placeholder.local"
 
+function isSupabaseStorageUrl(src: string): boolean {
+  return src.includes(SUPABASE_URL_IDENTIFIER)
+}
+
+function isExternalProductImage(src: string): boolean {
+  return /^https?:\/\//i.test(src) && !isSupabaseStorageUrl(src)
+}
+
 function createTransformParam(
   src: string,
   transform: ImageTransformOptions | undefined
@@ -63,7 +71,7 @@ export function OptimizedImage({
   const [useFallback, setUseFallback] = useState(false)
 
   const transformOptions = useMemo<ImageTransformOptions | undefined>(() => {
-    if (!src.includes(SUPABASE_URL_IDENTIFIER)) {
+    if (!isSupabaseStorageUrl(src)) {
       return supabaseTransform
     }
 
@@ -102,12 +110,13 @@ export function OptimizedImage({
   return (
     <Image
       {...props}
-      src={finalSrc}
+      src={imageError ? "/placeholder.svg" : finalSrc}
       alt={alt}
       quality={quality}
       width={width}
       height={height}
       fill={fill}
+      unoptimized={isExternalProductImage(src)}
       onError={handleError}
     />
   )

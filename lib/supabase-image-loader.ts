@@ -66,9 +66,13 @@ export default function supabaseImageLoader({ src, width, quality }: ImageLoader
     return optimizeSupabaseImage(cleanedSrc, options)
   }
 
-  // External (non-Supabase) images — return unchanged. Appending width/quality breaks
-  // WordPress and other CDNs (e.g. Titan Jet product photos).
+  // Shopify and other external CDNs — pass through unchanged (optionally sized).
   if (/^https?:\/\//.test(cleanedSrc)) {
+    if (cleanedSrc.includes('cdn.shopify.com') && width) {
+      const url = new URL(cleanedSrc)
+      url.searchParams.set('width', String(Math.min(width, 1200)))
+      return url.toString()
+    }
     return cleanedSrc
   }
 
