@@ -4,6 +4,16 @@ import { supabase, supabaseAdmin } from '@/lib/supabaseClient';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+function isMissingRelationError(message?: string): boolean {
+  if (!message) return false
+  const lower = message.toLowerCase()
+  return (
+    lower.includes('does not exist') ||
+    lower.includes('could not find the table') ||
+    lower.includes('schema cache')
+  )
+}
+
 // GET active flash sale
 export async function GET() {
   try {
@@ -25,6 +35,9 @@ export async function GET() {
       .maybeSingle();
 
     if (error) {
+      if (isMissingRelationError(error.message)) {
+        return NextResponse.json(null);
+      }
       console.error('Error fetching flash sale:', error);
       return NextResponse.json({ error: 'Failed to fetch flash sale' }, { status: 500 });
     }

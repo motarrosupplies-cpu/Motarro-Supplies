@@ -54,14 +54,25 @@ export async function POST(request: Request) {
       audToZarRate,
     })
 
-    return NextResponse.json({
-      ...result,
-      source,
-      audToZarRate,
-      message: result.done
-        ? `Import complete — ${result.processed}/${result.total} products synced.`
-        : `Batch synced — ${result.processed}/${result.total}. Call again with offset ${result.nextOffset}.`,
-    })
+    const { count: dbCount } = await supabaseAdmin
+      .from('simple_products')
+      .select('*', { count: 'exact', head: true })
+
+    const batchFailed = result.inserted === 0 && result.updated === 0 && result.errors > 0
+    const status = batchFailed ? 500 : 200
+
+    return NextResponse.json(
+      {
+        ...result,
+        source,
+        audToZarRate,
+        dbProductCount: dbCount ?? 0,
+        message: result.done
+          ? `Import complete — ${result.processed}/${result.total} products synced.`
+          : `Batch synced — ${result.processed}/${result.total}. Call again with offset ${result.nextOffset}.`,
+      },
+      { status }
+    )
   } catch (error) {
     console.error('[import-motarro-catalog]', error)
     return NextResponse.json(
@@ -84,12 +95,31 @@ export async function GET(request: Request) {
 
   try {
     const seed = loadBundledSeedCatalog()
+    let dbProductCount = 0
+    let activeProductCount = 0
+
+    if (supabaseAdmin) {
+      const { count: total } = await supabaseAdmin
+        .from('simple_products')
+        .select('*', { count: 'exact', head: true })
+      dbProductCount = total ?? 0
+
+      const { count: active } = await supabaseAdmin
+        .from('simple_products')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'active')
+      activeProductCount = active ?? 0
+    }
+
     return NextResponse.json({
       seedCount: seed.length,
+      dbProductCount,
+      activeProductCount,
       audToZarRate: Number(process.env.MOTARRO_AUD_TO_ZAR || 11.5),
       source: 'https://www.motarro.com.au/collections/all',
+      note: 'all_products_unified is a view — it shows rows from simple_products where status = active.',
       instructions:
-        'POST with { "offset": 0, "batchSize": 75 } — repeat until done=true. Run supabase migration 20260615120000_motarro_catalog_import.sql first.',
+        'POST with { "offset": 0, "batchSize": 75, "source": "seed" } — repeat until done=true.',
     })
   } catch (error) {
     return NextResponse.json(

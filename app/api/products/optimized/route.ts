@@ -12,6 +12,7 @@ import {
   normalizeAvailabilityDate,
 } from '@/lib/utils';
 import { generateProductSlug } from '@/lib/product-slug-utils';
+import { fetchStoreProducts } from '@/lib/products/fetch-store-products';
 
 // Product type definitions
 interface SimpleProduct {
@@ -72,47 +73,14 @@ export async function GET(request: Request) {
     
     const client = supabaseAdmin || supabase;
     
-    // Build query for unified view
-    let query = client
-      .from('all_products_unified')
-      .select('*')
-      .order('created_at', { ascending: false });
-    
-    if (category) {
-      query = query.eq('category', category.toLowerCase().trim());
-    }
-    
-    if (subcategory) {
-      // Normalize subcategory for matching
-      const normalizedSubcategory = subcategory.toLowerCase().trim().replace(/\s+/g, '-');
-      query = query.eq('subcategory', normalizedSubcategory);
-    }
-    
-    // API-level filtering: no manual SQL needed for Products vs Custom-Products
-    if (filter === 'store') {
-      query = query.neq('category', 'custom printing');
-    } else if (filter === 'custom-printing') {
-      query = query.eq('category', 'custom printing');
-    }
-    
-    if (onSale === 'true') {
-      query = query.eq('on_sale', true);
-    }
-    
-    if (isNew === 'true') {
-      query = query.eq('is_new', true);
-    }
-    
-    if (limit) {
-      query = query.limit(parseInt(limit));
-    }
-    
-    const { data: products, error } = await query;
-    
-    if (error) {
-      console.error('Database error:', error);
-      return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
-    }
+    const { products } = await fetchStoreProducts(client, {
+      category,
+      subcategory,
+      filter,
+      onSale,
+      isNew,
+      limit,
+    });
     
     const parseJsonArray = (value: any) => {
       if (!value) return [];
@@ -236,7 +204,11 @@ export async function GET(request: Request) {
     
   } catch (error) {
     console.error('Products fetch error:', error);
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'Failed to fetch products';
+    return NextResponse.json(
+      { error: 'Failed to fetch products', details: message },
+      { status: 500 }
+    );
   }
 }
 

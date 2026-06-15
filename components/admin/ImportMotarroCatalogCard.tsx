@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useToast } from '@/components/ui/use-toast'
@@ -11,6 +11,27 @@ export function ImportMotarroCatalogCard() {
   const { toast } = useToast()
   const [running, setRunning] = useState(false)
   const [progress, setProgress] = useState<string | null>(null)
+  const [dbCount, setDbCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    async function loadCount() {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession()
+        if (!session?.access_token) return
+
+        const res = await fetch('/api/admin/import-motarro-catalog', {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+        })
+        const data = await res.json()
+        if (typeof data.dbProductCount === 'number') setDbCount(data.dbProductCount)
+      } catch {
+        // ignore
+      }
+    }
+    loadCount()
+  }, [])
 
   const runImport = async () => {
     setRunning(true)
@@ -30,6 +51,7 @@ export function ImportMotarroCatalogCard() {
       let totalInserted = 0
       let totalUpdated = 0
       let totalErrors = 0
+      let lastErrorMessages: string[] = []
 
       while (!done) {
         setProgress(`Syncing products ${offset + 1}…`)
@@ -45,12 +67,18 @@ export function ImportMotarroCatalogCard() {
 
         const data = await res.json()
         if (!res.ok) {
-          throw new Error(data.error || 'Import batch failed')
+          const detail = data.errorMessages?.length
+            ? `${data.errorMessages[0]}`
+            : data.error
+          throw new Error(detail || 'Import batch failed')
         }
 
         totalInserted += data.inserted ?? 0
         totalUpdated += data.updated ?? 0
         totalErrors += data.errors ?? 0
+        if (Array.isArray(data.errorMessages) && data.errorMessages.length) {
+          lastErrorMessages = data.errorMessages
+        }
         done = Boolean(data.done)
         offset = data.nextOffset ?? offset
 
@@ -61,11 +89,19 @@ export function ImportMotarroCatalogCard() {
         if (!done && data.nextOffset == null) break
       }
 
+      if (totalInserted + totalUpdated === 0) {
+        throw new Error(
+          lastErrorMessages[0] ||
+            `No products were saved to Supabase (${totalErrors} errors). Check SUPABASE_SERVICE_ROLE_KEY in Vercel — it must be the secret/service_role key for project dkxvsitqxxkxtielgpxd.`
+        )
+      }
+
       toast({
         title: 'MOTARRO catalogue import complete',
-        description: `Inserted ${totalInserted}, updated ${totalUpdated}${totalErrors ? `, ${totalErrors} skipped/errors` : ''}.`,
+        description: `Inserted ${totalInserted}, updated ${totalUpdated}${totalErrors ? `, ${totalErrors} skipped/errors` : ''}. Refreshing product list…`,
       })
       setProgress(null)
+      await new Promise((resolve) => setTimeout(resolve, 800))
       window.location.reload()
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Import failed'
@@ -97,6 +133,16 @@ export function ImportMotarroCatalogCard() {
           </a>{' '}
           into Supabase from a bundled snapshot (1,127 products). Prices convert AUD → ZAR
           (rate 11.5). Run the SQL migration in Supabase first if this is a new database.
+        </p>
+        {typeof dbCount === 'number' ? (
+          <p className="text-foreground">
+            <strong>{dbCount}</strong> products currently in <code>simple_products</code>
+            {dbCount === 0 ? ' — import has not saved any rows yet.' : '.'}
+          </p>
+        ) : null}
+        <p className="text-xs">
+          Note: <code>all_products_unified</code> in Supabase is a view — it only shows active rows
+          from <code>simple_products</code>.
         </p>
         {progress ? <p className="text-foreground font-medium">{progress}</p> : null}
         <Button onClick={runImport} disabled={running}>

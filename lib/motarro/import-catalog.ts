@@ -70,6 +70,10 @@ export function audToZar(aud: string | number, rate = DEFAULT_AUD_TO_ZAR_RATE): 
   return Math.round(Number(aud) * rate * 100) / 100
 }
 
+function truncate(value: string, max: number): string {
+  return value.length > max ? value.slice(0, max) : value
+}
+
 export function shopifyProductToRow(
   product: MotarroShopifyProduct,
   audToZarRate = DEFAULT_AUD_TO_ZAR_RATE
@@ -83,26 +87,29 @@ export function shopifyProductToRow(
   const images = (product.images || []).map((img) => img.src)
   const inStock = variant?.available !== false
   const stock = inStock ? Math.max(1, Number(variant?.inventory_quantity) || 10) : 0
-  const slug = slugify(`${name}-${product.handle}`)
+  const slug = truncate(slugify(`${name}-${product.handle}`), 255)
 
   return {
-    name,
+    name: truncate(name, 255),
     description:
       product.body_html?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ||
       `${name} — MOTARRO stationery supply.`,
     price: priceZar,
     original_price: null as number | null,
-    category,
-    subcategory: slugify(product.product_type || category),
+    category: truncate(category, 50),
+    subcategory: truncate(slugify(product.product_type || category), 100),
     stock,
     is_new: false,
     on_sale: false,
     status: 'active' as const,
-    image,
-    images: JSON.stringify(images),
-    image_alt_texts: JSON.stringify([name]),
-    seo_title: `${name} | ${category} | MOTARRO Supplies`.slice(0, 60),
-    seo_description: `Buy ${name} from MOTARRO Supplies South Africa. ${product.product_type || 'Stationery'} — R${priceZar.toFixed(2)} with nationwide delivery.`.slice(0, 160),
+    image: truncate(image, 500),
+    images,
+    image_alt_texts: [truncate(name, 255)],
+    seo_title: truncate(`${name} | ${category} | MOTARRO Supplies`, 255),
+    seo_description: truncate(
+      `Buy ${name} from MOTARRO Supplies South Africa. ${product.product_type || 'Stationery'} — R${priceZar.toFixed(2)} with nationwide delivery.`,
+      500
+    ),
     seo_keywords: `motarro, ${category}, stationery south africa, ${name}`,
     seo_slug: slug,
     slug,
