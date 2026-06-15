@@ -17,7 +17,6 @@ import { EditProductForm } from '@/components/admin/edit-product-form';
 import { DeleteProductButton } from '@/components/admin/delete-product-button';
 import { useToast } from '@/components/ui/use-toast';
 import { AdminHeader } from '@/components/admin/AdminHeader';
-import { ImportMotarroCatalogCard } from '@/components/admin/ImportMotarroCatalogCard';
 import {
   Select,
   SelectContent,
@@ -183,8 +182,6 @@ export default function ProductsPage() {
         <h1 className="text-2xl sm:text-3xl font-bold">Products</h1>
         <AddProductForm onProductAdded={fetchProducts} />
       </div>
-
-      <ImportMotarroCatalogCard />
 
       <Card>
         <CardHeader>
