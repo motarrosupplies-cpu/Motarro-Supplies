@@ -8,7 +8,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { SEOContent } from "@/components/seo-content"
 import { Metadata } from "next"
-import { supabase, supabaseAdmin } from "@/lib/supabaseClient"
+import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient"
 
 export const metadata: Metadata = {
   title: "Sublimation & Custom Printing Johannesburg | MOTARRO Supplies",
@@ -75,6 +75,14 @@ function parseImages(images: any): string[] {
 }
 
 export default async function CustomPrintingPage() {
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="container px-4 py-12 mx-auto text-center text-muted-foreground">
+        Custom printing products will appear here once the store is connected.
+      </div>
+    )
+  }
+
   // FIXED: Fetch from all_products_unified view to get products from optimized tables
   const client = supabaseAdmin || supabase;
   const { data: productsData, error } = await client

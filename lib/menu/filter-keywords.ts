@@ -1,4 +1,4 @@
-import { supabase, supabaseAdmin } from "@/lib/supabaseClient";
+import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient";
 
 function slugify(value: string): string {
   return value
@@ -12,7 +12,7 @@ export async function getMenuFilterKeywords(
   section: string,
   subcategory?: string | null
 ): Promise<string[]> {
-  if (!subcategory) return [];
+  if (!subcategory || !isSupabaseConfigured()) return [];
 
   const client = supabaseAdmin || supabase;
   const { data: menuItems, error } = await client

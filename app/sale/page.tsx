@@ -5,7 +5,9 @@ import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { Product } from "@/types/product"
 import { Metadata } from "next"
-import { supabase, supabaseAdmin } from "@/lib/supabaseClient"
+import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient"
+
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   title: "Sale Items - Up to 50% Off Custom Apparel",
@@ -37,6 +39,14 @@ function parseImages(images: any): string[] {
 }
 
 export default async function SalePage() {
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="container px-4 py-12 mx-auto text-center text-muted-foreground">
+        Sale items will appear here once the store is connected.
+      </div>
+    )
+  }
+
       // Fetch sale products from Supabase using optimized structure
       const client = supabaseAdmin || supabase;
       const { data: productsData, error } = await client

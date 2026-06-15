@@ -5,7 +5,9 @@ import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { Product } from "@/types/product"
 import { Metadata } from "next"
-import { supabase } from "@/lib/supabaseClient"
+import { isSupabaseConfigured, supabase } from "@/lib/supabaseClient"
+
+export const dynamic = "force-dynamic"
 
 export const metadata: Metadata = {
   title: "New Arrivals - Latest Custom Apparel & Accessories",
@@ -37,6 +39,14 @@ function parseImages(images: any): string[] {
 }
 
 export default async function NewArrivalsPage() {
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="container px-4 py-12 mx-auto text-center text-muted-foreground">
+        New arrivals will appear here once the store is connected.
+      </div>
+    )
+  }
+
   // Fetch new products from unified view
   const { data: productsData, error } = await supabase
     .from('all_products_unified')

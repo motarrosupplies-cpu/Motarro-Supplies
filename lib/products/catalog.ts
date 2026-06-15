@@ -1,5 +1,5 @@
 import type { Product } from "@/types/product";
-import { supabase, supabaseAdmin } from "@/lib/supabaseClient";
+import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient";
 import { mapUnifiedRowToProduct } from "@/lib/products/map-native-product";
 import { getMenuFilterKeywords } from "@/lib/menu/filter-keywords";
 import { MOTARRO_SITE_URL } from "@/lib/brand";
@@ -23,7 +23,35 @@ export interface PageCatalogFilters {
   excludeCustomPrinting?: boolean;
 }
 
+const emptyCatalogResult = {
+  products: [] as Product[],
+  filterOptions: {
+    categories: [] as string[],
+    subcategories: [] as string[],
+    brands: [] as string[],
+    types: [] as string[],
+  },
+  activeFilters: {
+    subcategory: null as string | null,
+    kevroCategory: null as string | null,
+    brand: null as string | null,
+    type: null as string | null,
+  },
+};
+
 export async function fetchPageCatalog(filters: PageCatalogFilters) {
+  if (!isSupabaseConfigured()) {
+    return {
+      ...emptyCatalogResult,
+      activeFilters: {
+        ...emptyCatalogResult.activeFilters,
+        subcategory: filters.subcategory ?? null,
+        brand: filters.brand ?? null,
+        type: filters.type ?? null,
+      },
+    };
+  }
+
   const filterKeywords =
     filters.section !== "all"
       ? await getMenuFilterKeywords(filters.section, filters.subcategory)

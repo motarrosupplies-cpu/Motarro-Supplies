@@ -1,5 +1,7 @@
 import { Metadata } from "next"
-import { supabase, supabaseAdmin } from "@/lib/supabaseClient"
+import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient"
+
+export const dynamic = "force-dynamic"
 import { FlashSaleBanner } from "@/components/ready-to-ship/FlashSaleBanner"
 import { BundleBuilder } from "@/components/ready-to-ship/BundleBuilder"
 import { Card, CardContent } from "@/components/ui/card"
@@ -32,6 +34,14 @@ export const metadata: Metadata = {
 }
 
 export default async function ReadyToShipPage() {
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="container px-4 py-12 mx-auto text-center text-muted-foreground">
+        Ready-to-ship products will appear here once the store is connected.
+      </div>
+    )
+  }
+
   const client = supabaseAdmin || supabase
   
   const { data: products, error } = await client

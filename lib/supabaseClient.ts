@@ -4,6 +4,10 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
+export function isSupabaseConfigured(): boolean {
+  return Boolean(supabaseUrl && supabaseAnonKey);
+}
+
 // Initialize clients only if environment variables are available
 // This allows the build to proceed even if env vars are not set during build time
 // The clients will be properly initialized at runtime when env vars are available

@@ -1,5 +1,7 @@
 import { Metadata } from "next"
-import { supabase, supabaseAdmin } from "@/lib/supabaseClient"
+import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient"
+
+export const dynamic = "force-dynamic"
 import { FlashSaleBanner } from "@/components/ready-to-ship/FlashSaleBanner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -30,6 +32,14 @@ export const metadata: Metadata = {
 }
 
 export default async function CorporateGiftsPage() {
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="container px-4 py-12 mx-auto text-center text-muted-foreground">
+        Corporate gifts will appear here once the store is connected.
+      </div>
+    )
+  }
+
   const client = supabaseAdmin || supabase
   
   const { data: products, error } = await client
