@@ -16,8 +16,21 @@ interface DatabaseStatus {
   sample_data_count: number
 }
 
+interface ConfigCheck {
+  ok: boolean
+  diagnostics?: {
+    url: string | null
+    projectRef: string | null
+    admin: { sourceVar: string | null; kind: string; masked: string | null }
+    envVarsPresent: Record<string, boolean>
+    warnings: string[]
+  }
+  liveTest?: { ok: boolean; error?: string; message?: string }
+}
+
 export function DatabaseStatus() {
   const [status, setStatus] = useState<DatabaseStatus | null>(null)
+  const [configCheck, setConfigCheck] = useState<ConfigCheck | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -26,15 +39,22 @@ export function DatabaseStatus() {
     setError(null)
     
     try {
-      const response = await fetch("/api/admin/test-db")
-      if (!response.ok) {
-        const errorData = await response.json()
+      const [dbResponse, configResponse] = await Promise.all([
+        fetch("/api/admin/test-db"),
+        fetch("/api/admin/supabase-config-check"),
+      ])
+
+      const configData = (await configResponse.json()) as ConfigCheck
+      setConfigCheck(configData)
+
+      if (!dbResponse.ok) {
+        const errorData = await dbResponse.json()
         throw new Error(
           errorData.error || errorData.message || "Failed to check database"
         )
       }
       
-      const data = await response.json()
+      const data = await dbResponse.json()
       setStatus(data)
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error")
@@ -92,8 +112,27 @@ export function DatabaseStatus() {
               <span className="font-medium">Error:</span>
             </div>
             <p className="text-red-700 mt-1">{error}</p>
+            {configCheck?.liveTest?.error ? (
+              <p className="text-red-700 mt-2 text-sm">{configCheck.liveTest.error}</p>
+            ) : null}
           </div>
         )}
+
+        {configCheck?.diagnostics?.warnings?.length ? (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-2">
+            <p className="font-medium text-amber-900">Supabase config warnings</p>
+            <ul className="list-disc pl-5 text-sm text-amber-800 space-y-1">
+              {configCheck.diagnostics.warnings.map((warning) => (
+                <li key={warning}>{warning}</li>
+              ))}
+            </ul>
+            {configCheck.diagnostics.admin.sourceVar ? (
+              <p className="text-xs text-amber-700">
+                Using admin key from {configCheck.diagnostics.admin.sourceVar} ({configCheck.diagnostics.admin.kind})
+              </p>
+            ) : null}
+          </div>
+        ) : null}
 
         {status && (
           <div className="space-y-4">
