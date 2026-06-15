@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { verifyAdminRequest } from '@/lib/auth/verifyAdminApi'
 import { supabaseAdmin } from '@/lib/supabaseClient'
 import {
+  loadBundledSeedCatalog,
   loadMotarroSeedCatalog,
   resolveMotarroCatalogProducts,
   syncMotarroCatalogBatch,
@@ -39,7 +40,7 @@ export async function POST(request: Request) {
     const body = await request.json().catch(() => ({}))
     const offset = Number(body.offset ?? 0)
     const batchSize = Math.min(Number(body.batchSize ?? 75), 100)
-    const requestedSource = body.source === 'seed' ? 'seed' : 'live'
+    const requestedSource = body.source === 'live' ? 'live' : 'seed'
     const audToZarRate = Number(process.env.MOTARRO_AUD_TO_ZAR || 11.5)
 
     const { products, source } = await resolveMotarroCatalogProducts(
@@ -82,7 +83,7 @@ export async function GET(request: Request) {
   }
 
   try {
-    const seed = loadMotarroSeedCatalog(process.cwd())
+    const seed = loadBundledSeedCatalog()
     return NextResponse.json({
       seedCount: seed.length,
       audToZarRate: Number(process.env.MOTARRO_AUD_TO_ZAR || 11.5),

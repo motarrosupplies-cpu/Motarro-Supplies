@@ -14,7 +14,7 @@ export function ImportMotarroCatalogCard() {
 
   const runImport = async () => {
     setRunning(true)
-    setProgress('Fetching catalogue from motarro.com.au…')
+    setProgress('Loading bundled MOTARRO catalogue snapshot…')
 
     try {
       const {
@@ -40,7 +40,7 @@ export function ImportMotarroCatalogCard() {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${session.access_token}`,
           },
-          body: JSON.stringify({ offset, batchSize: 75, source: 'live' }),
+          body: JSON.stringify({ offset, batchSize: 75, source: 'seed' }),
         })
 
         const data = await res.json()
@@ -95,8 +95,8 @@ export function ImportMotarroCatalogCard() {
           >
             motarro.com.au
           </a>{' '}
-          into Supabase. Prices convert AUD → ZAR (rate 11.5). Run the SQL migration in Supabase
-          first if this is a new database.
+          into Supabase from a bundled snapshot (1,127 products). Prices convert AUD → ZAR
+          (rate 11.5). Run the SQL migration in Supabase first if this is a new database.
         </p>
         {progress ? <p className="text-foreground font-medium">{progress}</p> : null}
         <Button onClick={runImport} disabled={running}>

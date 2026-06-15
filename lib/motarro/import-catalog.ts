@@ -3,6 +3,7 @@ import { resolve } from 'path'
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { DEFAULT_AUD_TO_ZAR_RATE } from '@/lib/brand'
 import { mapProductTypeToCategory } from '@/lib/motarro/categories'
+import bundledSeedCatalog from '@/data/motarro-catalog-seed.json'
 
 export type MotarroShopifyProduct = {
   id: number
@@ -113,34 +114,66 @@ export function shopifyProductToRow(
   }
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+async function fetchMotarroAuPage(url: string, attempt = 0): Promise<Response> {
+  const res = await fetch(url, { cache: 'no-store' })
+  if ((res.status === 429 || res.status >= 500) && attempt < 5) {
+    const retryAfter = Number(res.headers.get('retry-after') || 0)
+    const delay = retryAfter > 0 ? retryAfter * 1000 : Math.min(1500 * 2 ** attempt, 20000)
+    await sleep(delay)
+    return fetchMotarroAuPage(url, attempt + 1)
+  }
+  return res
+}
+
 export async function fetchMotarroAuCatalog(limit?: number): Promise<MotarroShopifyProduct[]> {
   const all: MotarroShopifyProduct[] = []
   let page = 1
 
   while (page <= 30) {
     const url = `https://www.motarro.com.au/products.json?limit=250&page=${page}`
-    const res = await fetch(url, { next: { revalidate: 0 } } as RequestInit)
-    if (!res.ok) throw new Error(`Motarro AU fetch failed: ${res.status}`)
+    const res = await fetchMotarroAuPage(url)
+    if (!res.ok) {
+      throw new Error(
+        `Motarro AU fetch failed: ${res.status}. The site is rate-limiting requests — use the bundled seed import instead.`
+      )
+    }
     const data = (await res.json()) as { products?: MotarroShopifyProduct[] }
     if (!data.products?.length) break
     all.push(...data.products)
     if (limit && all.length >= limit) return all.slice(0, limit)
     page++
+    if (page <= 30) await sleep(600)
   }
 
   return limit ? all.slice(0, limit) : all
 }
 
+export function loadBundledSeedCatalog(): MotarroShopifyProduct[] {
+  const raw = bundledSeedCatalog as { products?: MotarroShopifyProduct[] }
+  if (!raw.products?.length) {
+    throw new Error('Bundled seed file has no products')
+  }
+  return raw.products
+}
+
 export function loadMotarroSeedCatalog(rootDir: string): MotarroShopifyProduct[] {
+  try {
+    return loadBundledSeedCatalog()
+  } catch {
+    // CLI / local dev fallback when JSON import is unavailable
+  }
+
   const candidates = [
     resolve(rootDir, 'data/motarro-catalog-seed.json'),
     resolve(process.cwd(), 'data/motarro-catalog-seed.json'),
   ]
   const seedPath = candidates.find((path) => existsSync(path))
   if (!seedPath) {
-    throw new Error(
-      'Seed file not found on server. Use source "live" to fetch from motarro.com.au instead.'
-    )
+    throw new Error('Seed catalogue is not available in this deployment.')
   }
   const raw = JSON.parse(readFileSync(seedPath, 'utf8')) as {
     products?: MotarroShopifyProduct[]
@@ -159,12 +192,7 @@ export async function resolveMotarroCatalogProducts(
     return { products: await fetchMotarroAuCatalog(), source: 'live' }
   }
 
-  try {
-    return { products: loadMotarroSeedCatalog(rootDir), source: 'seed' }
-  } catch (seedError) {
-    console.warn('[motarro-import] Seed unavailable, falling back to live AU catalog:', seedError)
-    return { products: await fetchMotarroAuCatalog(), source: 'live' }
-  }
+  return { products: loadMotarroSeedCatalog(rootDir), source: 'seed' }
 }
 
 export type ImportBatchResult = {
