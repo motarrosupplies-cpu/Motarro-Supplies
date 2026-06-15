@@ -17,6 +17,7 @@ import { EditProductForm } from '@/components/admin/edit-product-form';
 import { DeleteProductButton } from '@/components/admin/delete-product-button';
 import { useToast } from '@/components/ui/use-toast';
 import { AdminHeader } from '@/components/admin/AdminHeader';
+import { ImportMotarroCatalogCard } from '@/components/admin/ImportMotarroCatalogCard';
 import {
   Select,
   SelectContent,
@@ -183,7 +184,7 @@ export default function ProductsPage() {
         <AddProductForm onProductAdded={fetchProducts} />
       </div>
 
-      <Card>
+      <ImportMotarroCatalogCard />
         <CardHeader>
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <CardTitle>All Products</CardTitle>

@@ -1,0 +1,253 @@
+import { readFileSync, existsSync } from 'fs'
+import { resolve } from 'path'
+import type { SupabaseClient } from '@supabase/supabase-js'
+import { DEFAULT_AUD_TO_ZAR_RATE } from '@/lib/brand'
+import { mapProductTypeToCategory } from '@/lib/motarro/categories'
+
+export type MotarroShopifyProduct = {
+  id: number
+  title: string
+  handle: string
+  body_html?: string
+  product_type?: string
+  tags?: string[] | string
+  images?: { src: string }[]
+  variants?: {
+    price?: string
+    sku?: string
+    available?: boolean
+    inventory_quantity?: number
+  }[]
+}
+
+const PRODUCT_TYPE_TO_CATEGORY: Record<string, string> = {
+  Plastic: 'plastic',
+  Metal: 'metal',
+  Paper: 'paper',
+  Wooden: 'wooden',
+  Taxitiles: 'tiles',
+  Acrylic: 'acrylic',
+  'Glitter EVA Foam': 'foam-craft',
+  'EVA Foam': 'foam-craft',
+  felt: 'foam-craft',
+  foam: 'foam-craft',
+  Rubber: 'foam-craft',
+  Crayon: 'art-supplies',
+  Clay: 'art-supplies',
+  clay: 'art-supplies',
+  Watercolor: 'art-supplies',
+  Chalk: 'art-supplies',
+  'Washable paint': 'art-supplies',
+  Plasticine: 'art-supplies',
+  Pastel: 'art-supplies',
+  Oil: 'art-supplies',
+  Gouache: 'art-supplies',
+  Carbon: 'paper',
+  glass: 'acrylic',
+  Glass: 'acrylic',
+}
+
+export function slugify(text: string): string {
+  return String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+function mapCategory(productType: string | undefined): string {
+  if (!productType) return 'plastic'
+  return PRODUCT_TYPE_TO_CATEGORY[productType] ?? mapProductTypeToCategory(productType)
+}
+
+function getProductName(product: MotarroShopifyProduct): string {
+  const tag = Array.isArray(product.tags) ? product.tags[0] : product.tags
+  if (tag && typeof tag === 'string' && tag.trim()) return tag.trim()
+  return product.title
+}
+
+export function audToZar(aud: string | number, rate = DEFAULT_AUD_TO_ZAR_RATE): number {
+  return Math.round(Number(aud) * rate * 100) / 100
+}
+
+export function shopifyProductToRow(
+  product: MotarroShopifyProduct,
+  audToZarRate = DEFAULT_AUD_TO_ZAR_RATE
+) {
+  const variant = product.variants?.[0]
+  const priceAud = variant?.price || '0'
+  const priceZar = audToZar(priceAud, audToZarRate)
+  const name = getProductName(product)
+  const category = mapCategory(product.product_type)
+  const image = product.images?.[0]?.src || ''
+  const images = (product.images || []).map((img) => img.src)
+  const inStock = variant?.available !== false
+  const stock = inStock ? Math.max(1, Number(variant?.inventory_quantity) || 10) : 0
+  const slug = slugify(`${name}-${product.handle}`)
+
+  return {
+    name,
+    description:
+      product.body_html?.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() ||
+      `${name} — MOTARRO stationery supply.`,
+    price: priceZar,
+    original_price: null as number | null,
+    category,
+    subcategory: slugify(product.product_type || category),
+    stock,
+    is_new: false,
+    on_sale: false,
+    status: 'active' as const,
+    image,
+    images: JSON.stringify(images),
+    image_alt_texts: JSON.stringify([name]),
+    seo_title: `${name} | ${category} | MOTARRO Supplies`.slice(0, 60),
+    seo_description: `Buy ${name} from MOTARRO Supplies South Africa. ${product.product_type || 'Stationery'} — R${priceZar.toFixed(2)} with nationwide delivery.`.slice(0, 160),
+    seo_keywords: `motarro, ${category}, stationery south africa, ${name}`,
+    seo_slug: slug,
+    slug,
+    availability: stock > 0 ? 'in_stock' : 'out_of_stock',
+    condition: 'new',
+    low_stock_threshold: 5,
+    motarro_shopify_id: product.id,
+    motarro_shopify_handle: product.handle,
+  }
+}
+
+export async function fetchMotarroAuCatalog(limit?: number): Promise<MotarroShopifyProduct[]> {
+  const all: MotarroShopifyProduct[] = []
+  let page = 1
+
+  while (page <= 30) {
+    const url = `https://www.motarro.com.au/products.json?limit=250&page=${page}`
+    const res = await fetch(url, { next: { revalidate: 0 } } as RequestInit)
+    if (!res.ok) throw new Error(`Motarro AU fetch failed: ${res.status}`)
+    const data = (await res.json()) as { products?: MotarroShopifyProduct[] }
+    if (!data.products?.length) break
+    all.push(...data.products)
+    if (limit && all.length >= limit) return all.slice(0, limit)
+    page++
+  }
+
+  return limit ? all.slice(0, limit) : all
+}
+
+export function loadMotarroSeedCatalog(rootDir: string): MotarroShopifyProduct[] {
+  const seedPath = resolve(rootDir, 'data/motarro-catalog-seed.json')
+  if (!existsSync(seedPath)) {
+    throw new Error(`Seed file not found: ${seedPath}`)
+  }
+  const raw = JSON.parse(readFileSync(seedPath, 'utf8')) as {
+    products?: MotarroShopifyProduct[]
+  }
+  if (!raw.products?.length) {
+    throw new Error('Seed file has no products')
+  }
+  return raw.products
+}
+
+export type ImportBatchResult = {
+  ok: boolean
+  total: number
+  processed: number
+  inserted: number
+  updated: number
+  errors: number
+  nextOffset: number | null
+  done: boolean
+  errorMessages: string[]
+  categoryBreakdown: Record<string, number>
+}
+
+export async function syncMotarroCatalogBatch(
+  supabase: SupabaseClient,
+  products: MotarroShopifyProduct[],
+  options: {
+    offset?: number
+    batchSize?: number
+    audToZarRate?: number
+  } = {}
+): Promise<ImportBatchResult> {
+  const offset = options.offset ?? 0
+  const batchSize = options.batchSize ?? 50
+  const audToZarRate = options.audToZarRate ?? DEFAULT_AUD_TO_ZAR_RATE
+  const slice = products.slice(offset, offset + batchSize)
+  const total = products.length
+
+  let inserted = 0
+  let updated = 0
+  let errors = 0
+  const errorMessages: string[] = []
+
+  for (const product of slice) {
+    const row = shopifyProductToRow(product, audToZarRate)
+
+    if (!row.image || row.price <= 0) {
+      errors++
+      errorMessages.push(`Skipped ${row.name}: missing image or invalid price`)
+      continue
+    }
+
+    const { data: existing } = await supabase
+      .from('simple_products')
+      .select('id')
+      .eq('motarro_shopify_id', product.id)
+      .maybeSingle()
+
+    if (existing?.id) {
+      const { error } = await supabase
+        .from('simple_products')
+        .update({ ...row, updated_at: new Date().toISOString() })
+        .eq('id', existing.id)
+
+      if (error) {
+        errors++
+        errorMessages.push(`${row.name}: ${error.message}`)
+      } else {
+        updated++
+      }
+    } else {
+      const { error } = await supabase.from('simple_products').insert([row])
+      if (error) {
+        if (error.message.includes('duplicate') || error.code === '23505') {
+          const { error: upsertErr } = await supabase
+            .from('simple_products')
+            .update({ ...row, updated_at: new Date().toISOString() })
+            .eq('seo_slug', row.seo_slug)
+          if (upsertErr) {
+            errors++
+            errorMessages.push(`${row.name}: ${upsertErr.message}`)
+          } else {
+            updated++
+          }
+        } else {
+          errors++
+          errorMessages.push(`${row.name}: ${error.message}`)
+        }
+      } else {
+        inserted++
+      }
+    }
+  }
+
+  const processed = offset + slice.length
+  const categoryBreakdown = products.map((p) => shopifyProductToRow(p, audToZarRate).category).reduce(
+    (acc, cat) => {
+      acc[cat] = (acc[cat] || 0) + 1
+      return acc
+    },
+    {} as Record<string, number>
+  )
+
+  return {
+    ok: errors === 0 || inserted + updated > 0,
+    total,
+    processed,
+    inserted,
+    updated,
+    errors,
+    nextOffset: processed < total ? processed : null,
+    done: processed >= total,
+    errorMessages: errorMessages.slice(0, 10),
+    categoryBreakdown,
+  }
+}

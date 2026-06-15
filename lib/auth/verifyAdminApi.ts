@@ -3,6 +3,8 @@ import { isAdminEmailOnServer } from "@/lib/brand";
 type AdminAuthSuccess = { ok: true; userId: string; email: string };
 type AdminAuthFailure = { ok: false; status: number; error: string; code: "auth" };
 
+import { getSupabaseAnonKey, getSupabaseUrl } from '@/lib/supabase-env';
+
 export async function verifyAdminAccessToken(
   token: string | null | undefined
 ): Promise<AdminAuthSuccess | AdminAuthFailure> {
@@ -16,8 +18,8 @@ export async function verifyAdminAccessToken(
     };
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl = getSupabaseUrl();
+  const supabaseAnonKey = getSupabaseAnonKey();
   if (!supabaseUrl || !supabaseAnonKey) {
     return {
       ok: false,
