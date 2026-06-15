@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { useRef, useEffect, useState } from 'react'
 
-const WHATSAPP_NUMBER = '27696228848'
+const WHATSAPP_NUMBER = '27628533076'
 const WHATSAPP_MESSAGE = "Hi! I'd like help with stationery and craft supplies from MOTARRO Supplies"
 
 export function WhatsAppButton() {
