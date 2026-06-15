@@ -16,6 +16,8 @@
 -- -----------------------------------------------------------------------------
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
+CREATE SEQUENCE IF NOT EXISTS public.invoice_number_seq START 1;
+
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -32,10 +34,8 @@ LANGUAGE sql
 SECURITY DEFINER
 SET search_path = public
 AS $$
-  SELECT 'INV-' || LPAD(nextval('invoice_number_seq')::text, 6, '0');
+  SELECT 'INV-' || LPAD(nextval('public.invoice_number_seq')::text, 6, '0');
 $$;
-
-CREATE SEQUENCE IF NOT EXISTS invoice_number_seq START 1;
 
 -- -----------------------------------------------------------------------------
 -- 1. PRODUCTS (MOTARRO catalogue — simple_products + storefront view)
