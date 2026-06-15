@@ -1,4 +1,5 @@
-import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient";
+import { isSupabaseConfigured } from '@/lib/supabase-env';
+import { supabase, supabaseAdmin } from "@/lib/supabaseClient";
 
 function slugify(value: string): string {
   return value

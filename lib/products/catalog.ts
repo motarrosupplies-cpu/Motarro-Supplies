@@ -1,5 +1,6 @@
 import type { Product } from "@/types/product";
-import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseClient";
+import { isSupabaseConfigured } from '@/lib/supabase-env';
+import { supabase, supabaseAdmin } from "@/lib/supabaseClient";
 import { mapUnifiedRowToProduct } from "@/lib/products/map-native-product";
 import { getMenuFilterKeywords } from "@/lib/menu/filter-keywords";
 import { MOTARRO_SITE_URL } from "@/lib/brand";
