@@ -9,6 +9,9 @@ export const MOTARRO_SITE_URL =
 /** Primary logo — Trading_Mark.avif in public/brand/ */
 export const MOTARRO_LOGO_PATH = '/brand/Trading_Mark.avif'
 
+/** Homepage hero — MOTARRO retail storefront */
+export const MOTARRO_HERO_IMAGE_PATH = '/images/motarro-hero-storefront.jpg'
+
 export const MOTARRO_LOGO_URL = `${MOTARRO_SITE_URL}${MOTARRO_LOGO_PATH}`
 
 export const MOTARRO_EMAIL_LOGO_URL = MOTARRO_LOGO_URL
