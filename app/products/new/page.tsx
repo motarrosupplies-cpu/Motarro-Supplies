@@ -9,14 +9,25 @@ import { isSupabaseConfigured, supabase } from "@/lib/supabaseClient"
 
 export const dynamic = "force-dynamic"
 
+import { MOTARRO_BRAND_NAME, MOTARRO_SITE_URL } from "@/lib/brand"
+
 export const metadata: Metadata = {
-  title: "New Arrivals - Latest Custom Apparel & Accessories",
-  description: "Fresh styles just dropped! Check out our latest additions to help you look your best. New custom printed apparel, accessories, and trending designs.",
-  keywords: ["new arrivals", "latest styles", "trending apparel", "custom clothing", "new products", "fashion", "custom printing"],
+  title: "New Arrivals — Latest Stationery & Craft Supplies",
+  description:
+    "Discover the latest stationery and craft supplies added to MOTARRO Supplies. New products for schools, offices, and creative projects — prices in South African Rands.",
+  keywords: [
+    "new arrivals",
+    "new stationery south africa",
+    "new craft supplies",
+    "motarro new products",
+    "school supplies",
+    "art supplies",
+  ],
   openGraph: {
-    title: "New Arrivals - Latest Custom Apparel & Accessories",
-    description: "Fresh styles just dropped! Check out our latest additions to help you look your best.",
-    url: "https://www.motarro.co.za/products/new"
+    title: `New Arrivals | ${MOTARRO_BRAND_NAME}`,
+    description:
+      "Fresh additions to our stationery and craft catalogue — shop the latest MOTARRO products in ZAR.",
+    url: `${MOTARRO_SITE_URL}/products/new`,
   },
   alternates: {
     canonical: "/products/new"
@@ -96,7 +107,7 @@ export default async function NewArrivalsPage() {
       <div className="flex flex-col items-center text-center space-y-2 mb-8">
         <h1 className="text-3xl font-bold tracking-tight text-primary">New Arrivals</h1>
         <p className="text-muted-foreground max-w-[600px]">
-          Fresh styles just dropped! Check out our latest additions to help you look your best.
+          The latest stationery and craft supplies added to our catalogue — perfect for schools, classrooms, and creative projects.
         </p>
       </div>
 
@@ -107,19 +118,22 @@ export default async function NewArrivalsPage() {
         category="New Arrivals"
         features={[
           {
-            title: "Trending Designs",
-            description: "Our new arrivals feature the latest design trends and popular styles, ensuring you always have access to what's hot right now."
+            title: "Fresh Catalogue Additions",
+            description:
+              "We regularly add new stationery, craft materials, and educational supplies aligned with the MOTARRO Australia range.",
           },
           {
-            title: "Premium Materials",
-            description: "Each new item is crafted from high-quality materials, offering superior comfort, durability, and style that lasts season after season."
+            title: "Quality You Can Trust",
+            description:
+              "Every new product meets MOTARRO quality standards — durable materials for classrooms, offices, and creative use.",
           },
           {
-            title: "Limited Availability",
-            description: "Many of our new arrivals are produced in limited quantities, so grab your favorites before they're gone!"
-          }
+            title: "Prices in Rands",
+            description:
+              "All new arrivals are priced in ZAR with nationwide delivery across South Africa.",
+          },
         ]}
-        bottomText="Our new arrivals go through rigorous quality testing and trend analysis before hitting our shelves. We work with experienced designers and manufacturers to bring you pieces that combine style, comfort, and value."
+        bottomText="Check back often for new plastic, paper, wooden, metal, acrylic, art, foam craft, and tile products — everything you need for stationery passion and creative imagination."
       />
     </div>
   );

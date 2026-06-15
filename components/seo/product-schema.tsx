@@ -44,7 +44,7 @@ export function ProductSchema({
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
-    "description": product.description || `${product.name} - Custom printed apparel from MOTARRO Supplies`,
+    "description": product.description || `${product.name} — stationery and craft supplies from MOTARRO Supplies`,
     "image": images,
     "sku": (product as any).sku || product.id,
     "brand": {

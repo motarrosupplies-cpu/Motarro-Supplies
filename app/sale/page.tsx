@@ -9,14 +9,26 @@ import { isSupabaseConfigured, supabase, supabaseAdmin } from "@/lib/supabaseCli
 
 export const dynamic = "force-dynamic"
 
+import { MOTARRO_BRAND_NAME, MOTARRO_SITE_URL } from "@/lib/brand"
+
 export const metadata: Metadata = {
-  title: "Sale Items - Up to 50% Off Custom Apparel",
-  description: "Great style at even better prices. Up to 50% off on selected custom printed apparel, accessories, and promotional goods. Limited time offers with fast delivery.",
-  keywords: ["sale", "discount", "custom apparel", "promotional goods", "clearance", "special offers", "custom printing"],
+  title: "Sale — Discounted Stationery & Craft Supplies",
+  description:
+    "Save on selected stationery and craft supplies at MOTARRO Supplies. Discounted plastic, paper, art materials, and more — limited-time offers in South African Rands.",
+  keywords: [
+    "sale",
+    "discount stationery",
+    "craft supplies sale",
+    "clearance",
+    "special offers",
+    "motarro sale",
+    "school supplies sale",
+  ],
   openGraph: {
-    title: "Sale Items - Up to 50% Off Custom Apparel",
-    description: "Great style at even better prices. Up to 50% off on selected custom printed apparel and accessories.",
-    url: "https://www.motarro.co.za/sale"
+    title: `Sale Items | ${MOTARRO_BRAND_NAME}`,
+    description:
+      "Great prices on selected stationery and craft supplies — shop MOTARRO sale items in ZAR.",
+    url: `${MOTARRO_SITE_URL}/sale`,
   },
   alternates: {
     canonical: "/sale"
@@ -82,7 +94,7 @@ export default async function SalePage() {
       <div className="flex flex-col items-center text-center space-y-2 mb-8 w-full">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-primary break-words overflow-wrap-anywhere px-2">Sale</h1>
         <p className="text-muted-foreground max-w-[600px] break-words px-4">
-          Great style at even better prices. Up to 50% off on selected custom printed apparel, accessories, and promotional goods.
+          Save on selected stationery and craft supplies — quality MOTARRO products at reduced prices for a limited time.
         </p>
       </div>
 
@@ -93,23 +105,27 @@ export default async function SalePage() {
         category="Sale Items"
         features={[
           {
-            title: "Limited Time Offers",
-            description: "These sale prices are available for a limited time only. Don't miss out on these incredible deals on quality custom apparel."
+            title: "Limited-Time Savings",
+            description:
+              "Selected stationery and craft products at reduced prices — grab essentials for schools and creative projects while stocks last.",
           },
           {
-            title: "Premium Quality",
-            description: "All sale items maintain our high standards for materials and craftsmanship."
+            title: "MOTARRO Quality",
+            description:
+              "Sale items are the same trusted MOTARRO products — durable supplies for education, craft, and everyday organisation.",
           },
           {
-            title: "Fast Shipping", 
-            description: "Enjoy quick delivery on all sale items. Most orders ship within 1-2 business days."
+            title: "Nationwide Delivery",
+            description:
+              "Enjoy delivery across South Africa on all sale items. Most orders ship within 1–2 business days.",
           },
           {
             title: "Easy Returns",
-            description: "Our 30-day return policy applies to all sale items. Shop with confidence."
-          }
+            description:
+              "Our returns policy applies to sale items. Shop with confidence at MOTARRO Supplies.",
+          },
         ]}
-        bottomText="Our sale items are carefully selected from our best-selling collections, offering exceptional value with professional craftsmanship and sustainable materials."
+        bottomText="Our sale selection includes popular stationery, art supplies, and craft materials from across the MOTARRO catalogue — exceptional value for classrooms, offices, and home crafters."
       />
     </div>
   );

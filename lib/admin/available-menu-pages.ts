@@ -1,3 +1,5 @@
+import { MOTARRO_CATEGORIES } from "@/lib/motarro/categories";
+
 export type MenuPageOption = {
   label: string;
   href: string;
@@ -9,23 +11,16 @@ export const AVAILABLE_MENU_PAGES: MenuPageOption[] = [
   { label: "All Products", href: "/products" },
   { label: "New Arrivals", href: "/products/new" },
   { label: "Sale Items", href: "/sale" },
-  { label: "Men", href: "/men" },
-  { label: "Women", href: "/women" },
-  { label: "Kids", href: "/kids" },
-  { label: "Accessories", href: "/accessories" },
-  { label: "Branded Catalog", href: "/branded-catalog" },
-  { label: "Sublimation Supplies", href: "/sublimation-supplies" },
-  { label: "Custom Printing", href: "/custom-printing" },
-  { label: "School Events", href: "/school-events" },
-  { label: "Ready to Ship", href: "/ready-to-ship" },
+  ...MOTARRO_CATEGORIES.map((cat) => ({
+    label: cat.name,
+    href: `/shop/${cat.slug}`,
+  })),
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
-  { label: "Checkout", href: "/checkout" },
-  { label: "Cart", href: "/cart" },
+  { label: "Blog", href: "/blog" },
   { label: "FAQ", href: "/faq" },
   { label: "Shipping", href: "/shipping" },
-  { label: "Size Guide", href: "/size-guide" },
-  { label: "Blog", href: "/blog" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Portfolio", href: "/portfolio" },
+  { label: "Help Center", href: "/help" },
+  { label: "Checkout", href: "/checkout" },
+  { label: "Cart", href: "/cart" },
 ];

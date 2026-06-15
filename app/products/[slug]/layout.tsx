@@ -81,7 +81,7 @@ export async function generateMetadata(
   const description =
     product.seoDescription ||
     product.description ||
-    `Shop ${product.name} at MOTARRO Supplies. High-quality custom apparel and printing services in Johannesburg, South Africa.`
+    `Shop ${product.name} at MOTARRO Supplies. Quality stationery and craft supplies for South Africa — prices in ZAR with nationwide delivery.`
 
   const rawImages = Array.isArray(product.images) ? product.images : []
   const images = rawImages.filter(Boolean)
@@ -90,7 +90,7 @@ export async function generateMetadata(
     ? Array.isArray(product.seoKeywords)
       ? product.seoKeywords
       : [product.seoKeywords]
-    : [product.name, product.category, 'custom apparel', 'South Africa', 'Johannesburg', 'printing services']
+    : [product.name, product.category, 'stationery', 'craft supplies', 'South Africa', 'motarro supplies']
 
   // Use slug in URL (always use slug, never UUID)
   const productSlug = product.slug || product.seoSlug || product.id

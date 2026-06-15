@@ -155,11 +155,11 @@ export function EmailCapturePopup() {
             <div className="flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-primary" />
               <DialogTitle className="text-2xl font-black text-primary">
-                Get 10% Off + Free Design Mockup
+                Get 10% Off
               </DialogTitle>
             </div>
             <DialogDescription className="text-base text-slate-700 pt-2">
-              Join our newsletter and get exclusive discounts, design tips, and early access to new products!
+              Join our newsletter to get exclusive discounts and early access to new products.
             </DialogDescription>
           </DialogHeader>
 

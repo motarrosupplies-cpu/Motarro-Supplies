@@ -26,13 +26,14 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
     let enhancedLabel = item.label
     
     // Add SEO-friendly descriptions to breadcrumbs
-    if (item.href === '/men') enhancedLabel = 'Men\'s Custom Apparel'
-    if (item.href === '/women') enhancedLabel = 'Women\'s Custom Apparel'
-    if (item.href === '/accessories') enhancedLabel = 'Custom Accessories'
-    if (item.href === '/custom-printing') enhancedLabel = 'Custom Printing Services'
-    if (item.href === '/school-events') enhancedLabel = 'School Events Apparel'
-    if (item.href === '/products') enhancedLabel = 'All Custom Products'
-    if (item.href === '/sale') enhancedLabel = 'Sale Items - Custom Apparel'
+    if (item.href === '/products') enhancedLabel = 'All Stationery & Craft Products'
+    if (item.href === '/sale') enhancedLabel = 'Sale — Stationery & Craft Supplies'
+    if (item.href.startsWith('/shop/')) {
+      const slug = item.href.replace('/shop/', '').split('?')[0]
+      if (slug === 'plastic') enhancedLabel = 'Plastic Stationery'
+      if (slug === 'paper') enhancedLabel = 'Paper & Stationery'
+      if (slug === 'art-supplies') enhancedLabel = 'Art Supplies'
+    }
     
     return { ...item, label: enhancedLabel }
   })

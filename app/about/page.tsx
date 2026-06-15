@@ -3,35 +3,31 @@ import { ChevronRight, MapPin, Award, Users, Heart } from "lucide-react";
 import { Metadata } from "next";
 import { OrganizationSchema } from "@/components/seo/organization-schema";
 
+import { MOTARRO_BRAND_NAME, MOTARRO_DESCRIPTION, MOTARRO_SITE_URL } from "@/lib/brand"
+
 export const metadata: Metadata = {
-  title: "About Us - Custom Printing Services | MOTARRO Supplies",
-  description: "Learn about MOTARRO Supplies's custom printing services in Kempton Park and Johannesburg. Quality apparel printing with fast delivery across South Africa. Professional custom printing for t-shirts, hoodies, and promotional merchandise.",
+  title: `About Us | ${MOTARRO_BRAND_NAME}`,
+  description: `Learn about ${MOTARRO_BRAND_NAME} — South Africa's online destination for premium stationery, craft supplies, and educational materials. Nationwide delivery in ZAR.`,
   keywords: [
-    "about us",
-    "custom printing",
-    "Kempton Park",
-    "Johannesburg",
-    "apparel printing",
-    "South Africa",
-    "custom printing services",
-    "screen printing",
-    "sublimation printing",
-    "custom apparel",
-    "promotional merchandise",
-    "corporate branding"
+    "about motarro",
+    "stationery south africa",
+    "craft supplies south africa",
+    "school supplies",
+    "educational materials",
+    "motarro supplies",
   ],
   openGraph: {
-    title: "About Us - Custom Printing Services | MOTARRO Supplies",
-    description: "Learn about MOTARRO Supplies's custom printing services in Kempton Park and Johannesburg. Quality apparel printing with fast delivery across South Africa.",
-    url: "https://www.motarro.co.za/about",
+    title: `About Us | ${MOTARRO_BRAND_NAME}`,
+    description: MOTARRO_DESCRIPTION,
+    url: `${MOTARRO_SITE_URL}/about`,
     siteName: "MOTARRO Supplies",
     type: "website",
     locale: "en_ZA"
   },
   twitter: {
     card: "summary_large_image",
-    title: "About Us - Custom Printing Services | MOTARRO Supplies",
-    description: "Learn about MOTARRO Supplies's custom printing services in Kempton Park and Johannesburg."
+    title: `About Us | ${MOTARRO_BRAND_NAME}`,
+    description: MOTARRO_DESCRIPTION,
   },
   alternates: {
     canonical: "/about"

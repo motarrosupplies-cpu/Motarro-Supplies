@@ -10,7 +10,7 @@ export function OrganizationSchema() {
     "name": "MOTARRO Supplies",
     "url": "https://www.motarro.co.za",
     "logo": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
-    "description": "Custom printed apparel, t-shirts, hoodies, and accessories in South Africa. Serving Johannesburg, Kempton Park, and nationwide with high-quality custom printing services.",
+    "description": "Premium stationery, craft supplies, and educational materials for South Africa. Plastic, paper, wooden, metal, acrylic, art supplies, foam craft, and tiles — delivered nationwide in ZAR.",
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "ZA",

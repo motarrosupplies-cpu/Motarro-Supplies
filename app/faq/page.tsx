@@ -4,25 +4,24 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Metadata } from "next"
 
+import { MOTARRO_BRAND_NAME, MOTARRO_DESCRIPTION, MOTARRO_SITE_URL } from "@/lib/brand"
+
 export const metadata: Metadata = {
-  title: "FAQ – Custom Printing & Apparel | MOTARRO Supplies",
-  description: "Find answers to common questions about ordering, shipping, returns, custom printing services, and more. Get help with your MOTARRO Supplies experience in Johannesburg and South Africa.",
+  title: `FAQ | ${MOTARRO_BRAND_NAME}`,
+  description: `Find answers about ordering stationery and craft supplies, shipping, returns, and payments at ${MOTARRO_BRAND_NAME}. Help for customers across South Africa.`,
   keywords: [
-    "FAQ", 
-    "help", 
-    "questions", 
-    "shipping", 
-    "returns", 
-    "custom printing", 
-    "support",
-    "custom printing FAQ",
-    "apparel printing questions",
-    "Johannesburg printing help"
+    "FAQ",
+    "help",
+    "stationery FAQ",
+    "craft supplies help",
+    "shipping south africa",
+    "returns policy",
+    "motarro supplies support",
   ],
   openGraph: {
-    title: "FAQ - Frequently Asked Questions | MOTARRO Supplies",
-    description: "Find answers to common questions about ordering, shipping, returns, and custom printing services.",
-    url: "https://www.motarro.co.za/faq"
+    title: `FAQ | ${MOTARRO_BRAND_NAME}`,
+    description: MOTARRO_DESCRIPTION,
+    url: `${MOTARRO_SITE_URL}/faq`,
   },
   alternates: {
     canonical: "/faq"
@@ -33,7 +32,7 @@ const faqCategories = {
   ordering: [
     {
       question: "How do I place an order?",
-      answer: "Placing an order with MOTARRO Supplies is simple and straightforward. Browse our extensive collection of custom apparel, select your desired items, choose your sizes and colors, and add them to your cart. When you're ready, proceed to checkout where you can create an account for easier future orders or check out as a guest. Our secure payment system accepts all major credit cards, debit cards, PayFast, and Instant EFT. Once your order is confirmed, you'll receive an email confirmation with your order details and tracking information.",
+      answer: "Placing an order with MOTARRO Supplies is simple. Browse our stationery and craft catalogue, add items to your cart, and proceed to checkout. You can create an account for easier future orders or check out as a guest. We accept major credit and debit cards, PayFast, and Instant EFT. Once confirmed, you'll receive an email with your order details and tracking information.",
     },
     {
       question: "What payment methods do you accept?",
@@ -63,7 +62,7 @@ const faqCategories = {
     },
     {
       question: "Do you ship internationally?",
-      answer: "Currently, we only ship within South Africa. We're working on expanding our shipping options to neighboring countries in the near future. For international customers interested in our products, please contact us at motarrodotcoza@gmail.com to discuss potential shipping arrangements. We're committed to making our custom apparel accessible to customers worldwide and will keep you updated as we expand our shipping capabilities.",
+      answer: "Currently, we only ship within South Africa. For international enquiries, please contact us at motarrodotcoza@gmail.com. We're focused on delivering quality stationery and craft supplies nationwide in ZAR.",
     },
     {
       question: "How can I track my order?",

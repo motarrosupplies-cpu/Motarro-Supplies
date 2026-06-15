@@ -1,29 +1,29 @@
 import { Metadata } from "next";
 
+import { MOTARRO_BRAND_NAME, MOTARRO_DESCRIPTION, MOTARRO_SITE_URL } from "@/lib/brand"
+
 export const metadata: Metadata = {
-  title: "Contact Us - Custom Printing Services | MOTARRO Supplies",
-  description: "Get in touch with MOTARRO Supplies for custom printing services in Kempton Park and Johannesburg. Contact us via email, phone, or WhatsApp for quotes, support, and custom apparel inquiries.",
+  title: `Contact Us | ${MOTARRO_BRAND_NAME}`,
+  description: `Contact ${MOTARRO_BRAND_NAME} for stationery and craft supply enquiries. Reach us via email, phone, or WhatsApp for orders, support, and product questions across South Africa.`,
   keywords: [
-    "contact us",
-    "custom printing contact",
-    "Kempton Park printing",
-    "Johannesburg printing",
-    "custom apparel contact",
-    "printing services South Africa",
-    "apparel printing support"
+    "contact motarro",
+    "stationery enquiries",
+    "craft supplies contact",
+    "school supplies south africa",
+    "motarro supplies support",
   ],
   openGraph: {
-    title: "Contact Us - Custom Printing Services | MOTARRO Supplies",
-    description: "Get in touch with MOTARRO Supplies for custom printing services in Kempton Park and Johannesburg.",
-    url: "https://www.motarro.co.za/contact",
+    title: `Contact Us | ${MOTARRO_BRAND_NAME}`,
+    description: MOTARRO_DESCRIPTION,
+    url: `${MOTARRO_SITE_URL}/contact`,
     siteName: "MOTARRO Supplies",
     type: "website",
     locale: "en_ZA"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us - Custom Printing Services | MOTARRO Supplies",
-    description: "Get in touch with MOTARRO Supplies for custom printing services in Kempton Park and Johannesburg."
+    title: `Contact Us | ${MOTARRO_BRAND_NAME}`,
+    description: MOTARRO_DESCRIPTION,
   },
   alternates: {
     canonical: "/contact"

@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import { ProductGrid } from "@/components/product-grid"
+import { SEOContent } from "@/components/seo-content"
 import { SectionCatalogFilters } from "@/components/catalog/SectionCatalogFilters"
 import {
   getCategoryForSlug,
@@ -133,6 +134,28 @@ export async function MotarroCategoryPage({
         </Suspense>
 
         <ProductGrid products={products} />
+
+        <SEOContent
+          category={category.name}
+          intro={category.seoDescription}
+          features={[
+            {
+              title: "MOTARRO Quality",
+              description: category.description,
+            },
+            {
+              title: "Prices in Rands",
+              description:
+                "Shop this category with transparent ZAR pricing and nationwide delivery across South Africa.",
+            },
+            {
+              title: "Schools & Creators",
+              description:
+                "Ideal for classrooms, craft projects, offices, and creative learning — trusted MOTARRO supplies.",
+            },
+          ]}
+          bottomText={`Browse our full ${category.name.toLowerCase()} range at MOTARRO Supplies — stationery passion, unleash your imagination.`}
+        />
       </div>
     </>
   )

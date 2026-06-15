@@ -15,10 +15,10 @@ export function OrganizationSchema() {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "MOTARRO Supplies",
-    "alternateName": "MOTARRO Supplies Custom Apparel",
+    "alternateName": "MOTARRO Supplies Stationery",
     "url": BASE_URL,
     "logo": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
-    "description": "Custom printed apparel, t-shirts, hoodies, and accessories in South Africa. Serving Johannesburg, Kempton Park, and nationwide with high-quality custom printing services.",
+    "description": "Premium stationery, craft supplies, and educational materials for South Africa. Plastic, paper, wooden, metal, acrylic, art supplies, foam craft, and tiles — delivered nationwide in ZAR.",
     "foundingDate": "2020",
     "address": {
       "@type": "PostalAddress",
@@ -179,46 +179,38 @@ export function LocalBusinessSchema({
     ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Custom Apparel & Printing Services",
+      "name": "Stationery & Craft Supplies",
       "itemListElement": [
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Custom T-Shirt Printing",
-            "description": "Professional custom t-shirt printing services"
+            "@type": "Product",
+            "name": "Plastic Stationery",
+            "description": "Plastic organisers, stationery, and craft components"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Custom Hoodie Printing",
-            "description": "Professional custom hoodie printing services"
+            "@type": "Product",
+            "name": "Paper & Stationery",
+            "description": "Paper products and everyday stationery essentials"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Sublimation Printing",
-            "description": "High-quality sublimation printing for vibrant, durable designs"
+            "@type": "Product",
+            "name": "Art Supplies",
+            "description": "Crayons, clay, paint, chalk, and creative art materials"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Screen Printing",
-            "description": "Cost-effective screen printing for bulk orders"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "DTG Printing",
-            "description": "Direct-to-garment printing for detailed, photographic-quality designs"
+            "@type": "Product",
+            "name": "Craft Materials",
+            "description": "Wooden, metal, acrylic, foam craft, and tile supplies"
           }
         }
       ]
@@ -380,7 +372,7 @@ export function ProductSchema({
     "@context": "https://schema.org",
     "@type": "Product",
     "name": product.name,
-    "description": product.description || `${product.name} - Custom printed apparel from MOTARRO Supplies`,
+    "description": product.description || `${product.name} — stationery and craft supplies from MOTARRO Supplies`,
     "image": images.length > 0 ? images : undefined,
     "sku": product.sku || product.id,
     "brand": {
@@ -471,7 +463,7 @@ export function WebSiteSchema() {
     "@type": "WebSite",
     "name": "MOTARRO Supplies",
     "url": BASE_URL,
-    "description": "Custom printed apparel, t-shirts, hoodies, and accessories in South Africa. Serving Johannesburg, Kempton Park, and nationwide.",
+    "description": "Premium stationery, craft supplies, and educational materials for South Africa. Delivered nationwide in ZAR.",
     "publisher": {
       "@type": "Organization",
       "name": "MOTARRO Supplies",

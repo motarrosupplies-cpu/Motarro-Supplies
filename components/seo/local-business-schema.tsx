@@ -94,38 +94,38 @@ export function LocalBusinessSchema({
     ],
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Custom Apparel & Printing Services",
+      "name": "Stationery & Craft Supplies",
       "itemListElement": [
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Custom T-Shirt Printing",
-            "description": "Professional custom t-shirt printing services"
+            "@type": "Product",
+            "name": "Plastic Stationery",
+            "description": "Plastic organisers, stationery, and craft components"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Custom Hoodie Printing",
-            "description": "Professional custom hoodie printing services"
+            "@type": "Product",
+            "name": "Paper & Stationery",
+            "description": "Paper products and everyday stationery essentials"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Sublimation Printing",
-            "description": "High-quality sublimation printing for vibrant, durable designs"
+            "@type": "Product",
+            "name": "Art Supplies",
+            "description": "Crayons, clay, paint, chalk, and creative art materials"
           }
         },
         {
           "@type": "Offer",
           "itemOffered": {
-            "@type": "Service",
-            "name": "Screen Printing",
-            "description": "Cost-effective screen printing for bulk orders"
+            "@type": "Product",
+            "name": "Craft Materials",
+            "description": "Wooden, metal, acrylic, foam craft, and tile supplies"
           }
         }
       ]

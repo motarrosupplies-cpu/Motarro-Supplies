@@ -52,20 +52,20 @@ export default function NotFound() {
         <div className="pt-8 border-t border-gray-200">
           <p className="text-sm text-gray-500 mb-4">Popular Pages:</p>
           <div className="flex flex-wrap justify-center gap-3">
-            <Link href="/custom-printing" className="text-primary hover:underline text-sm">
-              Custom Printing
+            <Link href="/shop/plastic" className="text-primary hover:underline text-sm">
+              Plastic Supplies
             </Link>
             <span className="text-gray-300">•</span>
-            <Link href="/men" className="text-primary hover:underline text-sm">
-              Men's Apparel
+            <Link href="/shop/paper" className="text-primary hover:underline text-sm">
+              Paper &amp; Stationery
             </Link>
             <span className="text-gray-300">•</span>
-            <Link href="/women" className="text-primary hover:underline text-sm">
-              Women's Apparel
+            <Link href="/shop/art-supplies" className="text-primary hover:underline text-sm">
+              Art Supplies
             </Link>
             <span className="text-gray-300">•</span>
-            <Link href="/accessories" className="text-primary hover:underline text-sm">
-              Accessories
+            <Link href="/sale" className="text-primary hover:underline text-sm">
+              Sale
             </Link>
             <span className="text-gray-300">•</span>
             <Link href="/blog" className="text-primary hover:underline text-sm">

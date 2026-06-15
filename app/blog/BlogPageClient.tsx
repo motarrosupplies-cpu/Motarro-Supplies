@@ -85,8 +85,8 @@ export default function BlogPageClient() {
     const schema = {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
-      "name": "MOTARRO Supplies Blog - Custom Apparel & Printing Insights",
-      "description": "Expert insights on custom apparel, printing techniques, corporate branding, and industry trends",
+      "name": "MOTARRO Supplies Blog — Stationery & Craft Insights",
+      "description": "Tips, guides, and inspiration for stationery, craft projects, classroom supplies, and creative learning in South Africa",
       "url": "https://www.motarro.co.za/blog",
       "mainEntity": {
         "@type": "ItemList",
@@ -201,8 +201,8 @@ export default function BlogPageClient() {
             MOTARRO Supplies Blog
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Expert insights on custom apparel, printing techniques, corporate branding, and industry trends. 
-            Stay ahead with our latest articles and tips.
+            Expert insights on stationery, craft projects, classroom organisation, and creative learning.
+            Stay inspired with our latest articles and tips.
           </p>
         </div>
       </div>
@@ -395,37 +395,37 @@ export default function BlogPageClient() {
       {/* Blog Introduction Section */}
       <div className="mt-16 mb-12 bg-white rounded-2xl shadow-lg p-8">
         <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-primary mb-4">Your Ultimate Guide to Custom Apparel & Printing</h2>
+          <h2 className="text-2xl font-bold text-primary mb-4">Your Guide to Stationery &amp; Craft Supplies</h2>
           <p className="text-lg text-muted-foreground max-w-4xl mx-auto">
-            Welcome to the MOTARRO Supplies blog, your comprehensive resource for everything related to custom apparel, 
-            printing techniques, and corporate branding. Our expert team shares industry insights, practical tips, 
-            and the latest trends to help you make informed decisions about your custom printing projects.
+            Welcome to the MOTARRO Supplies blog — practical ideas for classrooms, crafters, and creative
+            projects. Our team shares product tips, project inspiration, and advice for getting the most
+            from your stationery and craft supplies.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="text-center p-6 bg-primary/5 rounded-xl">
-            <h3 className="text-lg font-semibold mb-3 text-primary">Printing Techniques</h3>
+            <h3 className="text-lg font-semibold mb-3 text-primary">Classroom Essentials</h3>
             <p className="text-muted-foreground text-sm">
-              Learn about sublimation, screen printing, embroidery, and other methods to choose the best option for your project.
+              Ideas for stocking classrooms with quality stationery, art materials, and organisational supplies.
             </p>
           </div>
           <div className="text-center p-6 bg-primary/5 rounded-xl">
-            <h3 className="text-lg font-semibold mb-3 text-primary">Corporate Branding</h3>
+            <h3 className="text-lg font-semibold mb-3 text-primary">Craft Projects</h3>
             <p className="text-muted-foreground text-sm">
-              Discover strategies for building brand awareness through custom apparel and promotional merchandise.
+              Inspiration for EVA foam, wooden letters, acrylic, tiles, and other MOTARRO craft materials.
             </p>
           </div>
           <div className="text-center p-6 bg-primary/5 rounded-xl">
-            <h3 className="text-lg font-semibold mb-3 text-primary">Sustainability</h3>
+            <h3 className="text-lg font-semibold mb-3 text-primary">Product Guides</h3>
             <p className="text-muted-foreground text-sm">
-              Explore eco-friendly printing options and sustainable materials for responsible custom apparel production.
+              Learn how to choose the right paper, plastic, metal, and art supplies for your needs.
             </p>
           </div>
           <div className="text-center p-6 bg-primary/5 rounded-xl">
-            <h3 className="text-lg font-semibold mb-3 text-primary">Industry Insights</h3>
+            <h3 className="text-lg font-semibold mb-3 text-primary">Creative Learning</h3>
             <p className="text-muted-foreground text-sm">
-              Stay updated with market trends, pricing strategies, and emerging technologies in the custom apparel industry.
+              Tips for teachers, parents, and crafters to spark imagination with quality supplies.
             </p>
           </div>
         </div>
@@ -433,9 +433,9 @@ export default function BlogPageClient() {
         <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-6 text-center">
           <h3 className="text-xl font-semibold mb-3">Why Follow Our Blog?</h3>
           <p className="text-muted-foreground max-w-3xl mx-auto">
-            Our blog combines years of industry experience with practical, actionable advice. Whether you're a business owner 
-            looking to enhance your brand, an event organizer planning custom merchandise, or simply someone interested in 
-            quality apparel, our content is designed to educate, inspire, and guide you toward successful custom printing projects.
+            Our blog combines product knowledge with practical, actionable advice. Whether you&apos;re a teacher
+            stocking a classroom, a parent planning craft activities, or a hobbyist exploring new materials,
+            you&apos;ll find ideas to make the most of MOTARRO stationery and craft supplies.
           </p>
         </div>
       </div>
@@ -444,9 +444,9 @@ export default function BlogPageClient() {
       <div className="mt-16 text-center">
         <Card className="max-w-2xl mx-auto bg-gradient-to-r from-primary/10 to-secondary/10">
           <CardHeader>
-            <CardTitle className="text-2xl">Stay Updated</CardTitle>
+            <CardTitle className="text-2xl">Get 10% Off</CardTitle>
             <CardDescription>
-              Get the latest custom apparel insights, printing tips, and industry news delivered to your inbox.
+              Join our newsletter to get exclusive discounts and early access to new products.
             </CardDescription>
           </CardHeader>
           <CardContent>
