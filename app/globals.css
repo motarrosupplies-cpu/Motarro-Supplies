@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* MOTARRO brand palette — aligned with motarro.com.au */
+    --background: 40 43% 98%;
+    --foreground: 252 15% 19%;
+    --card: 0 0% 100%;
+    --card-foreground: 252 15% 19%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 252 15% 19%;
+    --primary: 315 95% 31%;
+    --primary-foreground: 40 43% 98%;
+    --secondary: 72 100% 83%;
+    --secondary-foreground: 252 15% 19%;
+    --muted: 40 25% 94%;
+    --muted-foreground: 252 8% 42%;
+    --accent: 113 85% 37%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 40 20% 90%;
+    --input: 40 20% 90%;
+    --ring: 315 95% 31%;
+    --radius: 0.75rem;
+  }
+
+  /* Custom scrollbar styling */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 0.4) hsl(var(--muted));
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.4);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.6);
+  }
+
+  .dark {
+    --background: 252 15% 12%;
+    --foreground: 40 43% 98%;
+    --card: 252 15% 16%;
+    --card-foreground: 40 43% 98%;
+    --popover: 252 15% 16%;
+    --popover-foreground: 40 43% 98%;
+    --primary: 315 95% 40%;
+    --primary-foreground: 40 43% 98%;
+    --secondary: 72 80% 35%;
+    --secondary-foreground: 40 43% 98%;
+    --muted: 252 12% 22%;
+    --muted-foreground: 40 15% 70%;
+    --accent: 113 85% 42%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 252 12% 25%;
+    --input: 252 12% 25%;
+    --ring: 315 95% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* Force the background color to be applied */
+  html,
+  body {
+    background-color: hsl(280, 70%, 96%);
+  }
+}
+
+/* Add some custom styles to ensure the background color is applied */
+.page-background {
+  background-color: hsl(280, 70%, 96%);
+}
+
+/* Mobile text wrapping utilities */
+@layer utilities {
+  .overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+/* Prevent horizontal scrolling on mobile */
+@layer base {
+  html {
+    overflow-x: hidden;
+  }
+  
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  
+  /* Ensure all headings wrap on mobile */
+  h1, h2, h3, h4, h5, h6 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Ensure all text elements respect viewport width */
+  h1, h2, h3, h4, h5, h6, p, span, div {
+    max-width: 100%;
+  }
+}
+

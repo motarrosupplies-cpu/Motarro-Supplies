@@ -1,0 +1,373 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  role           Role      @default(USER)
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model MenuItem {
+  id        String   @id @default(cuid())
+  label     String
+  href      String
+  order     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Invoicing System Models
+model Customer {
+  id          String    @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String?
+  company     String?
+  address     Address?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Relations
+  invoices    Invoice[]
+  quotations  Quotation[]
+  creditNotes CreditNote[]
+  
+  @@map("customers")
+}
+
+model Address {
+  id         String   @id @default(cuid())
+  street     String
+  city       String
+  state      String
+  zipCode    String
+  country    String   @default("South Africa")
+  customerId String   @unique
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  
+  @@map("addresses")
+}
+
+model Invoice {
+  id            String        @id @default(cuid())
+  invoiceNumber String        @unique
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  issueDate     DateTime      @default(now())
+  dueDate       DateTime
+  status        InvoiceStatus @default(DRAFT)
+  subtotal      Decimal       @db.Decimal(10, 2)
+  taxAmount     Decimal       @db.Decimal(10, 2) @default(0)
+  total         Decimal       @db.Decimal(10, 2)
+  notes         String?
+  terms         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // Relations
+  items         InvoiceItem[]
+  
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Int
+  unitPrice   Decimal  @db.Decimal(10, 2)
+  total       Decimal  @db.Decimal(10, 2)
+  productImage String?
+  productId   String?
+  
+  @@map("invoice_items")
+}
+
+model Quotation {
+  id              String            @id @default(cuid())
+  quotationNumber String            @unique
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  issueDate       DateTime          @default(now())
+  expiryDate      DateTime
+  status          QuotationStatus   @default(DRAFT)
+  subtotal        Decimal           @db.Decimal(10, 2)
+  taxAmount       Decimal           @db.Decimal(10, 2) @default(0)
+  total           Decimal           @db.Decimal(10, 2)
+  notes           String?
+  terms           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  // Relations
+  items           QuotationItem[]
+  
+  @@map("quotations")
+}
+
+model QuotationItem {
+  id           String     @id @default(cuid())
+  quotationId  String
+  quotation    Quotation  @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  description  String
+  quantity     Int
+  unitPrice    Decimal    @db.Decimal(10, 2)
+  total        Decimal    @db.Decimal(10, 2)
+  productImage String?
+  productId    String?
+  
+  @@map("quotation_items")
+}
+
+model CreditNote {
+  id              String            @id @default(cuid())
+  creditNoteNumber String           @unique
+  customerId      String
+  customer        Customer          @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  invoiceId       String?           // Optional reference to original invoice
+  issueDate       DateTime          @default(now())
+  status          CreditNoteStatus  @default(DRAFT)
+  subtotal        Decimal           @db.Decimal(10, 2)
+  taxAmount       Decimal           @db.Decimal(10, 2) @default(0)
+  total           Decimal           @db.Decimal(10, 2)
+  reason          String
+  notes           String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  
+  // Relations
+  items           CreditNoteItem[]
+  
+  @@map("credit_notes")
+}
+
+model CreditNoteItem {
+  id            String      @id @default(cuid())
+  creditNoteId  String
+  creditNote    CreditNote  @relation(fields: [creditNoteId], references: [id], onDelete: Cascade)
+  description   String
+  quantity      Int
+  unitPrice     Decimal     @db.Decimal(10, 2)
+  total         Decimal     @db.Decimal(10, 2)
+  
+  @@map("credit_note_items")
+}
+
+// School Events Printing System Models
+model SchoolEvent {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  eventProducts EventProduct[]
+  orders       SchoolEventOrder[]
+  
+  @@map("school_events")
+}
+
+model EventProduct {
+  id          String      @id @default(cuid())
+  eventId     String
+  event       SchoolEvent @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  basePrice   Decimal     @db.Decimal(10, 2)
+  imageUrl    String?
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  // Relations
+  variants    EventProductVariant[]
+  additionalItems EventProductAdditionalItem[]
+  orderItems  SchoolEventOrderItem[]
+  
+  @@map("event_products")
+}
+
+model EventProductVariant {
+  id            String      @id @default(cuid())
+  productId     String
+  product       EventProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size          String
+  color         String
+  additionalPrice Decimal   @db.Decimal(10, 2) @default(0)
+  isActive      Boolean     @default(true)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  
+  // Relations
+  orderItems    SchoolEventOrderItem[]
+  
+  @@map("event_product_variants")
+}
+
+model EventProductAdditionalItem {
+  id          String      @id @default(cuid())
+  productId   String
+  product     EventProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name        String
+  description String?
+  price       Decimal     @db.Decimal(10, 2) @default(0)
+  category    String
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
+  
+  // Relations
+  options     EventProductAdditionalItemOption[]
+  orderAddons SchoolEventOrderItemAddon[]
+  
+  @@map("event_product_additional_items")
+}
+
+model EventProductAdditionalItemOption {
+  id              String                    @id @default(cuid())
+  additionalItemId String
+  additionalItem   EventProductAdditionalItem @relation(fields: [additionalItemId], references: [id], onDelete: Cascade)
+  optionName      String
+  optionValue     String
+  priceAdjustment Decimal                   @db.Decimal(10, 2) @default(0)
+  isActive        Boolean                   @default(true)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @default(now())
+  
+  // Relations
+  orderAddons     SchoolEventOrderItemAddon[]
+  
+  @@map("event_product_additional_item_options")
+}
+
+model SchoolEventOrder {
+  id            String              @id @default(cuid())
+  eventId       String
+  event         SchoolEvent         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  orderNumber   String              @unique
+  parentName    String
+  parentEmail   String
+  parentPhone   String
+  schoolName    String
+  grade         String?
+  className     String?
+  totalAmount   Decimal             @db.Decimal(10, 2)
+  status        SchoolOrderStatus   @default(PENDING)
+  paymentStatus PaymentStatus       @default(PENDING)
+  paymentMethod String?
+  notes         String?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  
+  // Relations
+  items         SchoolEventOrderItem[]
+  
+  @@map("school_event_orders")
+}
+
+model SchoolEventOrderItem {
+  id            String           @id @default(cuid())
+  orderId       String
+  order         SchoolEventOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId     String
+  product       EventProduct     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantId     String?
+  variant       EventProductVariant? @relation(fields: [variantId], references: [id], onDelete: SetNull)
+  childName     String
+  childAge      Int?
+  quantity      Int
+  unitPrice     Decimal          @db.Decimal(10, 2)
+  totalPrice    Decimal          @db.Decimal(10, 2)
+  specialInstructions String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  
+  // Relations
+  addons        SchoolEventOrderItemAddon[]
+  
+  @@map("school_event_order_items")
+}
+
+model SchoolEventOrderItemAddon {
+  id              String                    @id @default(cuid())
+  orderItemId     String
+  orderItem       SchoolEventOrderItem      @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  additionalItemId String
+  additionalItem   EventProductAdditionalItem @relation(fields: [additionalItemId], references: [id], onDelete: Cascade)
+  selectedOptionId String?
+  selectedOption   EventProductAdditionalItemOption? @relation(fields: [selectedOptionId], references: [id], onDelete: SetNull)
+  quantity        Int                       @default(1)
+  unitPrice       Decimal                   @db.Decimal(10, 2)
+  totalPrice      Decimal                   @db.Decimal(10, 2)
+  createdAt       DateTime                  @default(now())
+  updatedAt       DateTime                  @default(now())
+  
+  @@map("school_event_order_item_addons")
+}
+
+// Enums
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum CreditNoteStatus {
+  DRAFT
+  SENT
+  APPLIED
+  CANCELLED
+} 
+
+// Enums
+enum SchoolOrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PRODUCTION
+  READY_FOR_PICKUP
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+} 

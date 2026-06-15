@@ -1,0 +1,58 @@
+# Supabase Configuration
+# Get these values from your Supabase project settings
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Optional: Service Role Key (for server-side operations that bypass RLS)
+# SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
+# Example:
+# NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+# NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+# Google reCAPTCHA v3 Configuration
+# Get these from https://www.google.com/recaptcha/admin
+# Site Key (public, used in frontend - safe to expose to browser)
+NEXT_PUBLIC_RECAPTCHA_SITE=your_recaptcha_site_key
+# Secret Key (private, used in backend API - NEVER expose this)
+RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
+
+# Meta (Facebook) Pixel — public ID from Events Manager (safe in browser)
+NEXT_PUBLIC_META_PIXEL_ID=your_meta_pixel_id
+# Optional secret for /api/meta-catalog (WhatsApp / Commerce Manager scheduled feed)
+# META_CATALOG_FEED_SECRET=generate_a_long_random_string
+
+# Gmail SMTP Configuration (for contact form emails)
+GMAIL_APP_PASSWORD=your_gmail_app_password
+
+# Kevro stock feed (server-side only — never expose these in the browser)
+KEVRO_BASE_URL=https://wslive.kevro.co.za/StockFeed.asmx
+KEVRO_HTTP_USERNAME=your_kevro_http_username
+KEVRO_HTTP_PASSWORD=your_kevro_http_password
+KEVRO_API_USERNAME=your_kevro_api_username
+KEVRO_API_PASSWORD=your_kevro_api_password
+KEVRO_ENTITY_NAME=your_kevro_entity_name
+KEVRO_ENTITY_ID=your_kevro_entity_id
+KEVRO_TOKEN_KEY=your_kevro_token_key
+# Optional retail markup applied to supplier prices (e.g. 15 for 15%)
+KEVRO_PRICE_MARKUP_PERCENT=0
+# Optional cache duration in seconds (default 1800)
+KEVRO_CACHE_SECONDS=1800
+
+# Titan Jet WooCommerce catalog (public Store API — no credentials required)
+TITAN_JET_WC_STORE_URL=https://titanjet.co.za
+TITAN_JET_PRICE_MARKUP_PERCENT=0
+TITAN_JET_CACHE_SECONDS=1800
+TITAN_JET_SYNC_PER_PAGE=100
+
+# xAI (Grok) — server-side only, for admin AI tools
+XAI_API_KEY=your_xai_api_key
+# Optional model override (default: grok-4.3). Requires model ACL on your xAI API key.
+# XAI_MODEL=grok-4.3
+
+# Extra admin emails (comma-separated, optional)
+# NEXT_PUBLIC_ADMIN_EMAILS=you@yourdomain.com
+# ADMIN_EMAILS=you@yourdomain.com
+
+# WhatsApp number for lead qualifier "Open in WhatsApp" links (no + prefix)
+NEXT_PUBLIC_WHATSAPP_NUMBER=27696228848

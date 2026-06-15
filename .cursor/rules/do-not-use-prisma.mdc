@@ -1,0 +1,4 @@
+---
+description: Do Not Apply Prisma to this project as it relies purely on Supabase for data - Supabase uses snake_case and selective CamelCase
+alwaysApply: false
+---

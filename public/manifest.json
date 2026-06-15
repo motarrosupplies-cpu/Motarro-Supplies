@@ -1,0 +1,33 @@
+{
+  "name": "MOTARRO Supplies — Stationery & Craft",
+  "short_name": "MOTARRO",
+  "description": "Premium stationery, craft supplies, and educational materials for South Africa",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdfbf7",
+  "theme_color": "#9b046f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/brand/Trading_Mark.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand/Trading_Mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["shopping", "education"],
+  "lang": "en-ZA",
+  "scope": "/",
+  "prefer_related_applications": false
+}

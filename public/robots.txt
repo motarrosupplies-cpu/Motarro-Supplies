@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /private/
+
+# Sitemaps (only standard sitemap; local-business-feed is not sitemap protocol)
+Sitemap: https://www.motarro.co.za/sitemap.xml
+
+# Public API endpoints used by the site (allow crawl; do not list as Sitemap)
+Allow: /api/google-my-business
+Allow: /api/local-business-feed
+
+# Business Information Page (single page, not directory)
+Allow: /business-info 

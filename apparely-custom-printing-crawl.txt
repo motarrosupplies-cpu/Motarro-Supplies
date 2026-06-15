@@ -1,0 +1,144 @@
+APPARELY.CO.ZA - CUSTOM PRINTING PAGE CRAWL
+============================================
+URL: https://www.motarro.co.za/custom-printing
+Page Title: Sublimation Printing Johannesburg | Custom Printing Services South Africa | MOTARRO Supplies | MOTARRO Supplies
+Crawl Date: 2025-12-06
+
+================================================================================
+PAGE CONTENT
+================================================================================
+
+HEADER/NAVIGATION
+-----------------
+- MOTARRO Supplies Logo
+- Navigation Menu:
+  * All Product
+  * Men (with dropdown)
+    - T-Shirt
+    - Anime
+    - Hoodie
+  * Women (with dropdown)
+    - T-Shirt
+    - Hoodie
+  * Accessories
+  * Custom Printing
+  * Sale
+  * School Event
+  * Blog
+
+- Top Navigation Bar:
+  * Product
+  * Men
+  * Women
+  * Accessories
+  * Custom
+  * Blog
+  * Sale
+
+- Action Buttons:
+  * Search
+  * Account
+  * Cart
+
+BREADCRUMBS
+-----------
+Home > Custom Printing
+
+MAIN CONTENT
+------------
+Heading: Available Product
+
+PRODUCTS LIST
+-------------
+1. Personalized Double Walled Stainless Steel 20oz Tumbler [New]
+2. Outback Adult Backpack - Durable Mesh Strap Pink Canvas Daypack for Travel & Outdoor Adventure [New]
+3. Personalized Small Pencil Bag Case [New]
+4. Sublimation 32GB USB Flash Drive [New]
+5. Custom 6 panel Sublimation Polyester Cap [New]
+6. Custom iPhone Case – Dress It Up Like It Pays Rent [New]
+7. Custom Samsung A55 Case – Because Your Phone Deserves More Than Boring [New]
+8. Personalized Premium 165GSM Vinyl Finish T-Shirt
+9. Personalized Double Walled Stainless Steel Mug [New Sale]
+10. MDF Keyring - 50x73mm
+11. Personalized White & Black Socks -40cm
+12. Personalized Luxury Rope Bag
+13. Personalized Mouse Pad - 22x18cm
+14. Personalized Apron [New]
+15. Personalized Photo Keyring
+16. 4PC Coaster Set
+17. Custom White Sublimation T-Shirt
+
+Additional Section:
+- About Custom Printing - Custom Printed Apparel in South Africa (button/expandable section)
+
+FOOTER
+------
+MOTARRO Supplies Logo
+Tagline: "Because apparently you have to wear Clothes... Premium clothing with a sense of humor."
+
+Social Media Links:
+- Facebook
+- Instagram
+- Twitter
+- Etsy Shop
+
+Shop Section:
+- Men's Collection
+- Women's Collection
+- Accessories
+- Sale
+
+Company Section:
+- About Us
+- Contact Us
+- Career
+- Store Locator
+- T-Shirt Printing Kempton Park
+
+Customer Service Section:
+- Help Center
+- Shipping & Return
+- Size Guide
+- FAQ
+
+Copyright:
+© 2025 MOTARRO Supplies. All rights reserved.
+
+Legal Links:
+- Privacy Policy
+- Terms of Service
+- Cookie Policy
+
+ADDITIONAL ELEMENTS
+-------------------
+- Chat with us on WhatsApp (button)
+- Notifications (F8)
+
+================================================================================
+PAGE DESCRIPTION (from screenshot analysis)
+================================================================================
+
+The page features a clean, modern design with a white header and a light purple main content area. It introduces "Custom Printing - Printed Apparel & Sublimation Services" with a descriptive paragraph about professional printed apparel and custom printing services using sublimation technology. The page is perfect for personal gifts, business merchandise, or special events in Johannesburg and Kempton Park.
+
+The main content area displays a "Products" section with "Available Products" heading, showing a horizontal row of product images with "New" tags. Products include:
+- Custom tumblers
+- Backpacks
+- Pencil cases
+- USB flash drives
+- Caps
+- Phone cases
+- T-shirts
+- Mugs
+- Keyrings
+- Socks
+- Bags
+- Mouse pads
+- Aprons
+- Coasters
+
+The overall aesthetic is clean and professional, focusing on custom printing services and the variety of products available for customization.
+
+================================================================================
+END OF CRAWL
+================================================================================
+

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>LASA AFRICA • Order Confirmation</title>
+    <!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+    <style>
+      /* Client resets */
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+      img { -ms-interpolation-mode: bicubic; }
+      img { border: 0; outline: none; text-decoration: none; }
+      table { border-collapse: collapse !important; }
+      body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+      /* Custom */
+      :root { color-scheme: light dark; supported-color-schemes: light dark; }
+      a { color: #0A7C66; text-decoration: none; }
+      .btn { background:#0A7C66; color:#ffffff !important; border-radius:6px; padding:12px 18px; display:inline-block; font-weight:600; }
+      .muted { color:#667085; }
+      .caps { letter-spacing:.5px; text-transform:uppercase; font-size:12px; color:#667085; }
+      .total-row td { padding-top:10px; border-top:1px solid #E4E7EC; font-weight:700; }
+      @media (prefers-color-scheme: dark) {
+        body { background:#0b0b0b !important; }
+        .wrapper { background:#111214 !important; }
+        .card { background:#151719 !important; }
+        .muted, .caps { color:#9aa4af !important; }
+        .line { border-color:#24303a !important; }
+        .btn { background:#16a085 !important; }
+      }
+      /* Mobile */
+      @media screen and (max-width:600px) {
+        .container { width:100% !important; }
+        .px { padding-left:16px !important; padding-right:16px !important; }
+        .stack td { display:block; width:100% !important; }
+        .center { text-align:center !important; }
+      }
+    </style>
+  </head>
+  <body style="background:#F2F4F7;">
+    <!-- Preheader (hidden preview text) -->
+    <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+      Your LASA AFRICA order is confirmed. We’ll let you know when it ships.
+    </div>
+
+    <table role="presentation" width="100%" bgcolor="#F2F4F7">
+      <tr>
+        <td align="center" class="px" style="padding:24px;">
+          <table role="presentation" width="600" class="container wrapper" style="width:600px; background:#ffffff; border-radius:12px; overflow:hidden;">
+            <!-- Header -->
+            <tr>
+              <td style="padding:24px 28px;">
+                <table role="presentation" width="100%">
+                  <tr>
+                    <td align="left">
+                      <!-- LOGO -->
+                      <a href="https://lasa.africa" target="_blank" style="display:inline-block;">
+                        <img src="https://via.placeholder.com/160x36?text=LASA+AFRICA" alt="LASA AFRICA" width="160" height="36" style="display:block;">
+                      </a>
+                    </td>
+                    <td align="right" class="center">
+                      <span class="caps">Order Confirmation</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Hero -->
+            <tr>
+              <td class="card" style="padding:0 28px 8px 28px;">
+                <h1 style="margin:0; font-family:Arial,Helvetica,sans-serif; font-size:24px; line-height:32px; color:#101828;">
+                  Thank you, {{customer_first_name}}!
+                </h1>
+                <p style="margin:8px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:14px; line-height:22px; color:#344054;">
+                  Your order <strong>#{{order_number}}</strong> has been received on {{order_date}} and is now being prepared.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Order Meta -->
+            <tr>
+              <td style="padding:16px 28px;">
+                <table role="presentation" width="100%">
+                  <tr class="stack">
+                    <td valign="top" style="padding:12px 0; width:50%;">
+                      <div style="font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#667085;">Shipping to</div>
+                      <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#101828; margin-top:4px;">
+                        {{ship_name}}<br>
+                        {{ship_address1}}<br>
+                        {{ship_city}}, {{ship_province}} {{ship_postal}}<br>
+                        {{ship_country}}
+                      </div>
+                    </td>
+                    <td valign="top" style="padding:12px 0; width:50%;">
+                      <div style="font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#667085;">Summary</div>
+                      <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#101828; margin-top:4px;">
+                        Payment: {{payment_method}}<br>
+                        Delivery: {{shipping_method}}<br>
+                        ETA: {{eta_window}}
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- Items -->
+            <tr>
+              <td style="padding:8px 28px 0;">
+                <table role="presentation" width="100%">
+                  <tr>
+                    <td colspan="2" style="font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:14px; color:#101828; padding:8px 0;">
+                      Items
+                    </td>
+                  </tr>
+
+                  <!-- BEGIN: Repeat this block for each item -->
+                  <tr>
+                    <td style="padding:12px 0; border-top:1px solid #E4E7EC;">
+                      <table role="presentation" width="100%">
+                        <tr class="stack">
+                          <td style="width:64px;" valign="top">
+                            <img src="{{item_image_url}}" width="64" height="64" alt="" style="border-radius:8px; display:block;">
+                          </td>
+                          <td valign="top" style="padding-left:12px;">
+                            <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#101828; font-weight:600;">
+                              {{item_name}}
+                            </div>
+                            <div class="muted" style="font-family:Arial,Helvetica,sans-serif; font-size:12px; margin-top:2px;">
+                              Qty {{item_quantity}} • SKU {{item_sku}}
+                            </div>
+                          </td>
+                          <td valign="top" align="right">
+                            <div style="font-family:Arial,Helvetica,sans-serif; font-size:14px; color:#101828; font-weight:600;">
+                              R{{item_line_total}}
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <!-- END item block -->
+
+                  <!-- Totals -->
+                  <tr class="total-row">
+                    <td align="right" style="padding:6px 0; font-family:Arial,Helvetica,sans-serif; color:#101828;">Subtotal</td>
+                    <td align="right" style="padding:6px 0; font-family:Arial,Helvetica,sans-serif; color:#101828;" width="140">R{{subtotal}}</td>
+                  </tr>
+                  <tr>
+                    <td align="right" class="muted" style="padding:4px 0; font-family:Arial,Helvetica,sans-serif;">Shipping</td>
+                    <td align="right" class="muted" style="padding:4px 0; font-family:Arial,Helvetica,sans-serif;" width="140">R{{shipping}}</td>
+                  </tr>
+                  <tr>
+                    <td align="right" class="muted" style="padding:4px 0; font-family:Arial,Helvetica,sans-serif;">VAT (15%)</td>
+                    <td align="right" class="muted" style="padding:4px 0; font-family:Arial,Helvetica,sans-serif;" width="140">R{{tax}}</td>
+                  </tr>
+                  <tr class="total-row">
+                    <td align="right" style="padding:10px 0; font-family:Arial,Helvetica,sans-serif; font-size:16px;">Total</td>
+                    <td align="right" style="padding:10px 0; font-family:Arial,Helvetica,sans-serif; font-size:16px;" width="140">R{{total}}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- CTA -->
+            <tr>
+              <td style="padding:24px 28px 8px;" align="center">
+                <a class="btn" href="{{track_url}}" target="_blank">Track your order</a>
+                <div style="height:12px; line-height:12px;">&zwnj;</div>
+                <a href="{{order_url}}" target="_blank" style="font-family:Arial,Helvetica,sans-serif; font-size:12px;">View order details</a>
+              </td>
+            </tr>
+
+            <!-- Help -->
+            <tr>
+              <td style="padding:12px 28px 28px;">
+                <table role="presentation" width="100%">
+                  <tr class="stack">
+                    <td style="padding:12px 0;">
+                      <div style="font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#667085;">
+                        Questions? Reply to this email or contact us at <a href="mailto:support@lasa.africa">support@lasa.africa</a>.
+                      </div>
+                    </td>
+                    <td align="right" class="center" style="padding:12px 0;">
+                      <a href="https://lasa.africa" target="_blank" style="font-family:Arial,Helvetica,sans-serif; font-size:12px;">Shop again</a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Footer -->
+          <table role="presentation" width="600" class="container" style="width:600px; margin-top:12px;">
+            <tr>
+              <td align="center" style="padding:12px; font-family:Arial,Helvetica,sans-serif; font-size:12px; color:#667085;">
+                © {{year}} LASA AFRICA • All rights reserved<br>
+                Rivonia, South Africa
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
