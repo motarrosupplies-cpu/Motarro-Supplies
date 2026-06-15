@@ -3,12 +3,7 @@
 import { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabaseClient';
-import {
-  getAuthCallbackUrl,
-  getAuthErrorMessage,
-  isEmailNotConfirmedError,
-} from '@/lib/auth-utils';
-import { isAdminEmail } from '@/lib/brand';
+import { getAuthCallbackUrl, getAuthErrorMessage, getPostAuthRedirectPath, isEmailNotConfirmedError } from '@/lib/auth-utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -98,11 +93,7 @@ export default function LoginPage() {
         description: "Logged in successfully!",
       });
 
-      if (isAdminEmail(email)) {
-        router.push("/admin");
-      } else {
-        router.push("/customer");
-      }
+      router.push(getPostAuthRedirectPath(email));
     } catch (error: unknown) {
       const authError = error instanceof Error ? error : new Error('Failed to login');
       if (isEmailNotConfirmedError(authError)) {

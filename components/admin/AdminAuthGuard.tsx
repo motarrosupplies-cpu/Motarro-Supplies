@@ -30,7 +30,7 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
       }
 
       if (!isAdminEmail(user.email)) {
-        router.replace('/customer')
+        router.replace('/admin/login?error=not_admin')
         return
       }
 
@@ -48,7 +48,7 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
       }
 
       if (!isAdminEmail(session.user.email)) {
-        router.replace('/customer')
+        router.replace('/admin/login?error=not_admin')
       }
     })
 

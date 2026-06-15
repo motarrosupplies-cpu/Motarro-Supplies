@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
+import { getPostAuthRedirectPath } from '@/lib/auth-utils'
 
 export default function AuthCallbackPage() {
   const router = useRouter()
@@ -12,6 +13,7 @@ export default function AuthCallbackPage() {
     const handleCallback = async () => {
       const url = new URL(window.location.href)
       const code = url.searchParams.get('code')
+      const nextPath = url.searchParams.get('next')
       const errorDescription = url.searchParams.get('error_description')
 
       if (errorDescription) {
@@ -27,13 +29,11 @@ export default function AuthCallbackPage() {
           setTimeout(() => router.replace('/login?error=verification_failed'), 2500)
           return
         }
-        router.replace('/customer')
-        return
       }
 
       const { data: { session } } = await supabase.auth.getSession()
-      if (session) {
-        router.replace('/customer')
+      if (session?.user) {
+        router.replace(getPostAuthRedirectPath(session.user.email, nextPath))
         return
       }
 

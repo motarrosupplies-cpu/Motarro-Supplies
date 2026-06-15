@@ -1,10 +1,37 @@
 import type { AuthError } from '@supabase/supabase-js'
+import { isAdminEmail } from '@/lib/brand'
 
-export function getAuthCallbackUrl(): string {
-  if (typeof window !== 'undefined') {
-    return `${window.location.origin}/auth/callback`
+export function getAuthCallbackUrl(nextPath?: string): string {
+  const base =
+    typeof window !== 'undefined'
+      ? `${window.location.origin}/auth/callback`
+      : `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.motarro.co.za'}/auth/callback`
+
+  if (!nextPath || !nextPath.startsWith('/')) {
+    return base
   }
-  return `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.motarro.co.za'}/auth/callback`
+
+  return `${base}?next=${encodeURIComponent(nextPath)}`
+}
+
+/** Where to send the user after a successful sign-in or email confirmation. */
+export function getPostAuthRedirectPath(
+  email: string | null | undefined,
+  nextPath?: string | null
+): string {
+  if (isAdminEmail(email)) {
+    return '/admin'
+  }
+
+  if (nextPath?.startsWith('/admin')) {
+    return '/admin/login?error=not_admin'
+  }
+
+  if (nextPath?.startsWith('/')) {
+    return nextPath
+  }
+
+  return '/customer'
 }
 
 export function isEmailNotConfirmedError(error: AuthError | Error | null | undefined): boolean {
