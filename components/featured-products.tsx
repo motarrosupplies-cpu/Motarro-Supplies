@@ -87,7 +87,7 @@ export function FeaturedProducts() {
       <div className="flex flex-col items-center text-center space-y-4">
         <h3 className="text-4xl md:text-5xl font-black tracking-tight text-primary">Featured Products</h3>
         <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
-          Our most popular items, because apparently these are what people like to wear
+          Apparently what people want!
         </p>
       </div>
       {isLoading ? (
