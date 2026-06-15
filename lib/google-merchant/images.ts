@@ -1,6 +1,8 @@
+import { MOTARRO_SUPABASE_PROJECT_REF } from "@/lib/supabase-env";
+
 const TRUSTED_IMAGE_HOSTS = [
   "titanjet.co.za",
-  "hkervihhlhktjdxcekhi.supabase.co",
+  `${MOTARRO_SUPABASE_PROJECT_REF}.supabase.co`,
   "www.motarro.co.za",
 ];
 

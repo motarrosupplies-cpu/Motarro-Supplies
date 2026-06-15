@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const PROJECT_REF = process.env.SUPABASE_PROJECT_REF ?? 'hkervihhlhktjdxcekhi'
+const PROJECT_REF = process.env.SUPABASE_PROJECT_REF ?? 'dkxvsitqxxkxtielgpxd'
 const ACCESS_TOKEN = process.env.SUPABASE_ACCESS_TOKEN
 
 async function main() {

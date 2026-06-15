@@ -127,6 +127,20 @@ export function getSupabaseProjectRefFromUrl(url?: string): string | null {
   return match?.[1] ?? null
 }
 
+/** Canonical MOTARRO Supabase project — use when env URL is unset (local/docs). */
+export const MOTARRO_SUPABASE_PROJECT_REF = 'dkxvsitqxxkxtielgpxd'
+
+export function getSupabaseProjectRef(): string {
+  return getSupabaseProjectRefFromUrl() ?? MOTARRO_SUPABASE_PROJECT_REF
+}
+
+export function getSupabaseStoragePublicUrl(objectPath: string): string {
+  const base =
+    getSupabaseUrl() ?? `https://${MOTARRO_SUPABASE_PROJECT_REF}.supabase.co`
+  const path = objectPath.replace(/^\//, '')
+  return `${base}/storage/v1/object/public/${path}`
+}
+
 function decodeJwtPayload(key: string): Record<string, unknown> | null {
   const parts = key.trim().split('.')
   if (parts.length < 2) return null

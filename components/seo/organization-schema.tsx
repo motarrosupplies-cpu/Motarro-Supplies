@@ -3,13 +3,15 @@
  * JSON-LD structured data for MOTARRO Supplies business
  */
 
+import { MOTARRO_LOGO_URL } from '@/lib/brand'
+
 export function OrganizationSchema() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "MOTARRO Supplies",
     "url": "https://www.motarro.co.za",
-    "logo": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
+    "logo": MOTARRO_LOGO_URL,
     "description": "Premium stationery, craft supplies, and educational materials for South Africa. Plastic, paper, wooden, metal, acrylic, art supplies, foam craft, and tiles — delivered nationwide in ZAR.",
     "address": {
       "@type": "PostalAddress",

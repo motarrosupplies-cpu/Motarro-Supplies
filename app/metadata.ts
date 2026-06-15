@@ -1,5 +1,6 @@
 // SEO metadata configuration for MOTARRO Supplies
 import { Metadata } from 'next'
+import { MOTARRO_LOGO_URL } from '@/lib/brand'
 
 export const metadata: Metadata = {
   title: {
@@ -246,7 +247,7 @@ export const metadata: Metadata = {
     siteName: "MOTARRO Supplies",
     images: [
       {
-        url: "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
+        url: MOTARRO_LOGO_URL,
         width: 1200,
         height: 630,
         alt: "MOTARRO Supplies — Custom Printed Apparel & Accessories"
@@ -259,7 +260,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MOTARRO Supplies | Custom Printed Apparel, Accessories & Promotional Goods",
     description: "Shop MOTARRO Supplies for high-quality custom printed apparel, accessories, and promotional goods in South Africa.",
-    images: ["https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG"],
+    images: [MOTARRO_LOGO_URL],
     creator: "@motarrosupplies"
   },
   alternates: {

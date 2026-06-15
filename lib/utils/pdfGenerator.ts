@@ -1,12 +1,13 @@
 import jsPDF from 'jspdf';
 import { Invoice, Quotation, CreditNote, Customer } from '@/types/invoice';
+import { MOTARRO_EMAIL_LOGO_URL } from '@/lib/brand';
 
 export class PDFGenerator {
   private doc: jsPDF;
   private yPosition: number = 50;
   private pageWidth: number = 210;
   private margin: number = 20;
-  private logoUrl: string = 'https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/MOTARRO Supplies-logo.PNG';
+  private logoUrl: string = MOTARRO_EMAIL_LOGO_URL;
 
   constructor() {
     this.doc = new jsPDF();

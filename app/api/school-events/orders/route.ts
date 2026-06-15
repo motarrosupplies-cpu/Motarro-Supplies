@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabaseClient";
+import { MOTARRO_EMAIL_LOGO_URL } from "@/lib/brand";
 
 export async function POST(request: NextRequest) {
   try {
@@ -277,7 +278,7 @@ export async function POST(request: NextRequest) {
                   <tr>
                     <td align="left">
                       <a href="https://www.motarro.co.za" target="_blank" style="display:inline-block;">
-                        <img src="https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/MOTARRO Supplies-logo.PNG" alt="MOTARRO Supplies" style="display:block; max-width:160px; height:auto;">
+                        <img src="${MOTARRO_EMAIL_LOGO_URL}" alt="MOTARRO Supplies" style="display:block; max-width:160px; height:auto;">
                       </a>
                     </td>
                     <td align="right" class="center">

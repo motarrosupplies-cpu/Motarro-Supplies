@@ -2,6 +2,7 @@ import Link from "next/link"
 import { HeroImage, CategoryBanner } from "@/components/optimized-image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Star, Users, Zap } from "lucide-react"
+import { MOTARRO_LOGO_URL } from "@/lib/brand"
 
 export function LifestyleSection() {
   return (
@@ -129,7 +130,7 @@ export function LifestyleSection() {
           
           <div className="relative h-[400px] rounded-3xl overflow-hidden group">
             <CategoryBanner
-              src="https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/Mens-Collection01.jpg?width=1200&quality=75"
+              src={MOTARRO_LOGO_URL}
               alt="Custom Printing Process - Professional Quality"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"

@@ -1,0 +1,22 @@
+---
+description: MOTARRO Supabase project and env conventions
+alwaysApply: true
+---
+
+# MOTARRO Supabase (production)
+
+- **Project ref:** `dkxvsitqxxkxtielgpxd`
+- **URL:** `https://dkxvsitqxxkxtielgpxd.supabase.co`
+- **Legacy Apparely project** `hkervihhlhktjdxcekhi` — do not use for new env vars, URLs, or storage paths.
+
+## Vercel env (all from the same project)
+
+- `NEXT_PUBLIC_SUPABASE_URL` = `https://dkxvsitqxxkxtielgpxd.supabase.co`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` = `sb_publishable_…`
+- `SUPABASE_SERVICE_ROLE_KEY` = `sb_secret_…` (secret key, not publishable)
+
+## Code
+
+- Use `getSupabaseUrl()`, `getSupabaseStoragePublicUrl()`, and `MOTARRO_SUPABASE_PROJECT_REF` from `lib/supabase-env.ts`.
+- Do not hardcode `hkervihhlhktjdxcekhi` in app code.
+- Bootstrap SQL: `supabase/motarro-bootstrap.sql`

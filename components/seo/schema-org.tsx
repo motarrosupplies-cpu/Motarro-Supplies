@@ -4,6 +4,7 @@
  */
 
 import Script from 'next/script';
+import { MOTARRO_LOGO_URL } from '@/lib/brand';
 
 const BASE_URL = 'https://www.motarro.co.za';
 
@@ -17,7 +18,7 @@ export function OrganizationSchema() {
     "name": "MOTARRO Supplies",
     "alternateName": "MOTARRO Supplies Stationery",
     "url": BASE_URL,
-    "logo": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
+    "logo": MOTARRO_LOGO_URL,
     "description": "Premium stationery, craft supplies, and educational materials for South Africa. Plastic, paper, wooden, metal, acrylic, art supplies, foam craft, and tiles — delivered nationwide in ZAR.",
     "foundingDate": "2020",
     "address": {
@@ -107,7 +108,7 @@ export function LocalBusinessSchema({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": name,
-    "image": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
+    "image": MOTARRO_LOGO_URL,
     "url": BASE_URL,
     "telephone": phone,
     "priceRange": priceRange,
@@ -469,7 +470,7 @@ export function WebSiteSchema() {
       "name": "MOTARRO Supplies",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG"
+        "url": MOTARRO_LOGO_URL
       }
     },
     "potentialAction": {
@@ -603,7 +604,7 @@ export function ArticleSchema({
   author,
   publisher = {
     name: "MOTARRO Supplies",
-    logo: "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG"
+    logo: MOTARRO_LOGO_URL
   },
   url
 }: ArticleSchemaProps) {
@@ -1011,7 +1012,7 @@ export function VideoObjectSchema({
       "name": "MOTARRO Supplies",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG"
+        "url": MOTARRO_LOGO_URL
       }
     }
   };

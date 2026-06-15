@@ -4,6 +4,7 @@ import { ChevronRight, MapPin, Clock, Phone, Mail, Globe, Star, CheckCircle, Tru
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import { MOTARRO_LOGO_URL } from '@/lib/brand';
 
 export const metadata: Metadata = {
   title: 'Business Information | MOTARRO Supplies — Custom Apparel & Printing Services',
@@ -39,7 +40,7 @@ export default function BusinessInfoPage() {
             "name": "MOTARRO Supplies",
             "alternateName": "MOTARRO Supplies Custom Apparel",
             "url": "https://www.motarro.co.za",
-            "logo": "https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG",
+            "logo": MOTARRO_LOGO_URL,
             "description": "Custom printed apparel and promotional goods in South Africa. Specializing in corporate uniforms, event merchandise, and personalized clothing.",
             "address": {
               "@type": "PostalAddress",

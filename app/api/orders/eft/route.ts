@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase, supabaseAdmin } from "@/lib/supabaseClient";
 import { validateOrderItemsStock } from "@/lib/services/stockValidationService";
+import { MOTARRO_EMAIL_LOGO_URL } from "@/lib/brand";
 
 /** Creates EFT order after validating stock. Order stays pending until payment is confirmed manually; stock is deducted on admin Accept. */
 export async function POST(request: NextRequest) {
@@ -262,7 +263,7 @@ export async function POST(request: NextRequest) {
                   <tr>
                     <td align="left">
                       <a href="https://www.motarro.co.za" target="_blank" style="display:inline-block;">
-                        <img src="https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/MOTARRO Supplies-logo.PNG" alt="MOTARRO Supplies" style="display:block; max-width:160px; height:auto;">
+                        <img src="${MOTARRO_EMAIL_LOGO_URL}" alt="MOTARRO Supplies" style="display:block; max-width:160px; height:auto;">
                       </a>
                     </td>
                     <td align="right" class="center">

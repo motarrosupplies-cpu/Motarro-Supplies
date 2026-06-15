@@ -37,7 +37,6 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'cdn.shopify.com', pathname: '/**' },
       { protocol: 'https', hostname: '*.supabase.co', pathname: '/**' },
-      { protocol: 'https', hostname: 'hkervihhlhktjdxcekhi.supabase.co', pathname: '/**' },
       { protocol: 'https', hostname: 'dkxvsitqxxkxtielgpxd.supabase.co', pathname: '/**' },
     ],
     formats: ['image/avif', 'image/webp'],
@@ -75,12 +74,12 @@ const nextConfig = {
               "form-action 'self' https://www.payfast.co.za https://*.payfast.co.za;",
               "object-src 'none';",
               "frame-ancestors 'self';",
-              "img-src 'self' data: blob: https://cdn.shopify.com https://*.shopify.com https://hkervihhlhktjdxcekhi.supabase.co https://dkxvsitqxxkxtielgpxd.supabase.co https://*.supabase.co https://*.blob.core.windows.net https://titanjet.co.za https://*.titanjet.co.za https://www.google-analytics.com https://www.googletagmanager.com https://*.google.com https://www.google.co.za https://*.g.doubleclick.net https://i.ytimg.com https://img.youtube.com https://www.facebook.com https://facebook.com;",
+              "img-src 'self' data: blob: https://cdn.shopify.com https://*.shopify.com https://dkxvsitqxxkxtielgpxd.supabase.co https://*.supabase.co https://*.blob.core.windows.net https://titanjet.co.za https://*.titanjet.co.za https://www.google-analytics.com https://www.googletagmanager.com https://*.google.com https://www.google.co.za https://*.g.doubleclick.net https://i.ytimg.com https://img.youtube.com https://www.facebook.com https://facebook.com;",
               "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://www.gstatic.com https://vercel.live https://va.vercel-scripts.com https://connect.facebook.net;",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;",
               "font-src 'self' data: https://fonts.gstatic.com;",
               // blob: required for GLTF embedded textures and Draco decoder workers (custom-printing 3D hoodie).
-              "connect-src 'self' blob: https://hkervihhlhktjdxcekhi.supabase.co https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.analytics.google.com https://analytics.google.com https://www.google.com https://www.gstatic.com https://www.google.com/recaptcha https://www.gstatic.com/recaptcha https://*.merchant-center-analytics.goog https://vitals.vercel-insights.com https://va.vercel-scripts.com https://vercel.live https://www.payfast.co.za https://*.payfast.co.za https://www.google.co.za https://www.facebook.com https://connect.facebook.net https://graph.facebook.com;",
+              "connect-src 'self' blob: https://dkxvsitqxxkxtielgpxd.supabase.co https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.analytics.google.com https://analytics.google.com https://www.google.com https://www.gstatic.com https://www.google.com/recaptcha https://www.gstatic.com/recaptcha https://*.merchant-center-analytics.goog https://vitals.vercel-insights.com https://va.vercel-scripts.com https://vercel.live https://www.payfast.co.za https://*.payfast.co.za https://www.google.co.za https://www.facebook.com https://connect.facebook.net https://graph.facebook.com;",
               "frame-src 'self' https://www.google.com https://www.gstatic.com https://www.youtube.com https://www.youtube-nocookie.com https://www.facebook.com;",
               "manifest-src 'self';",
               "media-src 'self' blob:;",

@@ -17,6 +17,10 @@ import { Toaster as SonnerToaster } from "@/components/ui/sonner"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { ImagePolyfillLoader } from "@/components/ImagePolyfillLoader"
 import { MetaPixel } from "@/components/analytics/MetaPixel"
+import { getSupabaseUrl, MOTARRO_SUPABASE_PROJECT_REF } from "@/lib/supabase-env"
+
+const supabaseOrigin =
+  getSupabaseUrl() ?? `https://${MOTARRO_SUPABASE_PROJECT_REF}.supabase.co`
 
 // Allow static generation for better performance
 // Only force-dynamic where truly needed (admin pages, etc.)
@@ -110,10 +114,10 @@ export default function RootLayout({
         <OrganizationSchema />
         <LocalBusinessSchema />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://hkervihhlhktjdxcekhi.supabase.co" crossOrigin="anonymous" />
+        <link rel="preconnect" href={supabaseOrigin} crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://hkervihhlhktjdxcekhi.supabase.co" />
+        <link rel="dns-prefetch" href={supabaseOrigin} />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="dns-prefetch" href="https://www.gstatic.com" />

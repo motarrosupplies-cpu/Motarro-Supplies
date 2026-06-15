@@ -184,7 +184,9 @@ export function getBestFormat(): 'avif' | 'webp' | 'jpeg' {
   return 'jpeg';
 }
 
-export const APPARELY_LOGO_BASE_URL = 'https://hkervihhlhktjdxcekhi.supabase.co/storage/v1/object/public/product-images/LOGO.PNG'
+import { MOTARRO_LOGO_URL } from '@/lib/brand'
+
+export const APPARELY_LOGO_BASE_URL = MOTARRO_LOGO_URL
 
 export const APPARELY_LOGO_OPTIMIZED = optimizeSupabaseImage(APPARELY_LOGO_BASE_URL, {
   width: 200,
