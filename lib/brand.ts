@@ -3,6 +3,8 @@
  * South African market (ZAR). Aligned with motarro.com.au product catalogue.
  */
 
+import { isGuestAuthEmail } from '@/lib/guest-auth'
+
 export const MOTARRO_SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://www.motarro.co.za'
 
@@ -26,7 +28,10 @@ export const MOTARRO_DESCRIPTION =
 /** AUD → ZAR conversion for catalogue import (override via MOTARRO_AUD_TO_ZAR env). */
 export const DEFAULT_AUD_TO_ZAR_RATE = 11.5
 
-export const DEFAULT_ADMIN_EMAILS = ['dartonstaker@gmail.com'] as const
+export const DEFAULT_ADMIN_EMAILS = [
+  'motarrosupplies@gmail.com',
+  'dartonstaker@gmail.com',
+] as const
 
 /** Backward-compatible aliases */
 export const APPARELY_SITE_URL = MOTARRO_SITE_URL
@@ -47,12 +52,14 @@ export function getAdminEmailAllowlist(): string[] {
 
 export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false
+  if (isGuestAuthEmail(email)) return true
   const normalized = email.trim().toLowerCase()
   return getAdminEmailAllowlist().includes(normalized)
 }
 
 export function isAdminEmailOnServer(email: string | null | undefined): boolean {
   if (!email) return false
+  if (isGuestAuthEmail(email)) return true
   if (isAdminEmail(email)) return true
 
   const extras =

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "create-admin": "ts-node scripts/create-admin.ts",
+    "create-guest-auth": "node scripts/create-guest-auth-user.mjs",
     "audit:semrush-warnings": "tsx scripts/semrush_warnings_audit.ts",
     "optimize:images": "node scripts/optimize-images.mjs"
   },

@@ -51,8 +51,13 @@ XAI_API_KEY=your_xai_api_key
 # XAI_MODEL=grok-4.3
 
 # Extra admin emails (comma-separated, optional)
-# NEXT_PUBLIC_ADMIN_EMAILS=you@yourdomain.com
+# NEXT_PUBLIC_ADMIN_EMAILS=you@yourdomain.com,motarrosupplies@gmail.com
 # ADMIN_EMAILS=you@yourdomain.com
+
+# Optional shared guest admin login (fake email — no inbox; must exist in Supabase Auth)
+# NEXT_PUBLIC_GUEST_AUTH_EMAIL=guest@email.com
+# GUEST_AUTH_PASSWORD=your-secure-password
+# Run once locally: node scripts/create-guest-auth-user.mjs
 
 # WhatsApp number for lead qualifier "Open in WhatsApp" links (no + prefix)
 NEXT_PUBLIC_WHATSAPP_NUMBER=27696228848

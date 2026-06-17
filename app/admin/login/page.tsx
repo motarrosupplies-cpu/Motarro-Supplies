@@ -44,7 +44,8 @@ export default function AdminLogin() {
         {notAdmin ? (
           <p className="mb-4 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
             This account does not have admin access. Ask the site owner to add your email to{' '}
-            <code className="text-xs">NEXT_PUBLIC_ADMIN_EMAILS</code> in Vercel, then sign in again.
+            <code className="text-xs">NEXT_PUBLIC_ADMIN_EMAILS</code> or{' '}
+            <code className="text-xs">NEXT_PUBLIC_GUEST_AUTH_EMAIL</code> in Vercel, then sign in again.
           </p>
         ) : null}
         <Auth
