@@ -1,9 +1,10 @@
 /**
  * Optional demo / shared admin login (fake email — no inbox).
  *
- * Vercel:
- * - NEXT_PUBLIC_GUEST_AUTH_EMAIL=guest@email.com  (client + server allowlist)
- * - GUEST_AUTH_PASSWORD=…                         (server only — provisioning script)
+ * Vercel (set both to the same value, or only GUEST_AUTH_EMAIL — build copies it to public):
+ * - GUEST_AUTH_EMAIL=guest@email.com
+ * - NEXT_PUBLIC_GUEST_AUTH_EMAIL=guest@email.com
+ * - GUEST_AUTH_PASSWORD=…                         (server only — provisioning)
  */
 
 function sanitize(value: string | undefined): string | undefined {

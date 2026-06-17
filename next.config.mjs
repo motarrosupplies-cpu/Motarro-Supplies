@@ -6,7 +6,15 @@ try {
 }
 
 /** @type {import('next').NextConfig} */
+const guestAuthEmail =
+  process.env.NEXT_PUBLIC_GUEST_AUTH_EMAIL?.trim() ||
+  process.env.GUEST_AUTH_EMAIL?.trim() ||
+  'guest@email.com'
+
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_GUEST_AUTH_EMAIL: guestAuthEmail,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

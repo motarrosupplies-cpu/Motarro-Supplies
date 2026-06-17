@@ -29,6 +29,7 @@ export const MOTARRO_DESCRIPTION =
 export const DEFAULT_AUD_TO_ZAR_RATE = 11.5
 
 export const DEFAULT_ADMIN_EMAILS = [
+  'guest@email.com',
   'motarrosupplies@gmail.com',
   'dartonstaker@gmail.com',
 ] as const
@@ -50,6 +51,14 @@ export function getAdminEmailAllowlist(): string[] {
   return [...new Set([...defaults, ...extras])]
 }
 
+function getServerOnlyAdminEmails(): string[] {
+  return (
+    process.env.ADMIN_EMAILS?.split(',')
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean) ?? []
+  )
+}
+
 export function isAdminEmail(email: string | null | undefined): boolean {
   if (!email) return false
   if (isGuestAuthEmail(email)) return true
@@ -62,10 +71,6 @@ export function isAdminEmailOnServer(email: string | null | undefined): boolean 
   if (isGuestAuthEmail(email)) return true
   if (isAdminEmail(email)) return true
 
-  const extras =
-    process.env.ADMIN_EMAILS?.split(',')
-      .map((value) => value.trim().toLowerCase())
-      .filter(Boolean) ?? []
-
-  return extras.includes(email.trim().toLowerCase())
+  const normalized = email.trim().toLowerCase()
+  return getServerOnlyAdminEmails().includes(normalized)
 }

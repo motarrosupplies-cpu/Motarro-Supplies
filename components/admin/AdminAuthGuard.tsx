@@ -4,7 +4,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { Loader2 } from 'lucide-react'
 import { supabase } from '@/lib/supabaseClient'
-import { isAdminEmail } from '@/lib/brand'
+import { verifyAdminSession } from '@/lib/auth/verifyAdminClient'
 
 type AuthState = 'checking' | 'authorized'
 
@@ -19,17 +19,16 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
   useEffect(() => {
     let active = true
 
-    const verifyAccess = async () => {
-      const { data: { user }, error } = await supabase.auth.getUser()
-
-      if (!active) return
-
-      if (error || !user) {
+    const verifyAccess = async (accessToken: string | null | undefined) => {
+      if (!accessToken) {
         router.replace('/admin/login')
         return
       }
 
-      if (!isAdminEmail(user.email)) {
+      const isAdmin = await verifyAdminSession(accessToken)
+      if (!active) return
+
+      if (!isAdmin) {
         router.replace('/admin/login?error=not_admin')
         return
       }
@@ -37,18 +36,30 @@ export function AdminAuthGuard({ children }: AdminAuthGuardProps) {
       setAuthState('authorized')
     }
 
-    void verifyAccess()
+    const checkUser = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession()
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!active) return
-
-      if (event === 'SIGNED_OUT' || !session?.user) {
+      if (error || !session) {
         router.replace('/admin/login')
         return
       }
 
-      if (!isAdminEmail(session.user.email)) {
-        router.replace('/admin/login?error=not_admin')
+      await verifyAccess(session.access_token)
+    }
+
+    void checkUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (!active) return
+
+      if (event === 'SIGNED_OUT' || !session) {
+        router.replace('/admin/login')
+        return
+      }
+
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        void verifyAccess(session.access_token)
       }
     })
 

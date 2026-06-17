@@ -55,9 +55,11 @@ XAI_API_KEY=your_xai_api_key
 # ADMIN_EMAILS=you@yourdomain.com
 
 # Optional shared guest admin login (fake email — no inbox; must exist in Supabase Auth)
+# GUEST_AUTH_EMAIL=guest@email.com
 # NEXT_PUBLIC_GUEST_AUTH_EMAIL=guest@email.com
 # GUEST_AUTH_PASSWORD=your-secure-password
 # Run once locally: node scripts/create-guest-auth-user.mjs
+# Or on production (one-time): POST /api/admin/provision-guest with header x-provision-secret: <password>
 
 # WhatsApp number for lead qualifier "Open in WhatsApp" links (no + prefix)
 NEXT_PUBLIC_WHATSAPP_NUMBER=27696228848
